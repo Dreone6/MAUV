@@ -18,14 +18,17 @@ const HomePage = () => {
     const lastPeriod = new Date(mockUser.lastPeriodStart);
     const daysSinceLastPeriod = Math.floor((today - lastPeriod) / (1000 * 60 * 60 * 24));
     
-    if (daysSinceLastPeriod <= mockUser.periodLength) {
-      return { phase: 'period', day: daysSinceLastPeriod, color: 'from-red-400 to-pink-500' };
-    } else if (daysSinceLastPeriod > 10 && daysSinceLastPeriod <= 16) {
-      return { phase: 'fertile', day: daysSinceLastPeriod, color: 'from-purple-400 to-pink-400' };
-    } else if (daysSinceLastPeriod > 16 && daysSinceLastPeriod <= 24) {
-      return { phase: 'luteal', day: daysSinceLastPeriod, color: 'from-blue-400 to-purple-400' };
+    // Calculate current cycle day (wraps around based on cycle length)
+    const cycleDay = ((daysSinceLastPeriod % mockUser.cycleLength) + 1);
+    
+    if (cycleDay <= mockUser.periodLength) {
+      return { phase: 'period', day: cycleDay, color: 'from-red-400 to-pink-500' };
+    } else if (cycleDay > 10 && cycleDay <= 16) {
+      return { phase: 'fertile', day: cycleDay, color: 'from-purple-400 to-pink-400' };
+    } else if (cycleDay > 16 && cycleDay <= 24) {
+      return { phase: 'luteal', day: cycleDay, color: 'from-blue-400 to-purple-400' };
     } else {
-      return { phase: 'follicular', day: daysSinceLastPeriod, color: 'from-teal-400 to-blue-400' };
+      return { phase: 'follicular', day: cycleDay, color: 'from-teal-400 to-blue-400' };
     }
   }, []);
 
