@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Calendar, Heart, Activity, Bell, User, Plus, TrendingUp } from 'lucide-react';
+import { Calendar, Heart, Activity, Bell, User, Plus, TrendingUp, MessageCircle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
@@ -7,11 +7,13 @@ import CalendarView from '../components/CalendarView';
 import SymptomTracker from '../components/SymptomTracker';
 import InsightsPanel from '../components/InsightsPanel';
 import CycleInfo from '../components/CycleInfo';
+import AmaraChat from '../components/AmaraChat';
 import { mockUser, mockCycleData } from '../mockData';
 
 const HomePage = () => {
   const [activeTab, setActiveTab] = useState('today');
   const [showSymptomTracker, setShowSymptomTracker] = useState(false);
+  const [showAmaraChat, setShowAmaraChat] = useState(false);
 
   const cyclePhase = useMemo(() => {
     const today = new Date();
@@ -38,19 +40,31 @@ const HomePage = () => {
       <header className="bg-white/80 backdrop-blur-md border-b border-pink-100 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center">
-              <Heart className="w-6 h-6 text-white" fill="white" />
+            <img src="/mauv_logo.png" alt="MAUV" className="w-10 h-10" />
+            <div>
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
+                MAUV
+              </h1>
+              <p className="text-xs text-gray-600">Personal Tracker</p>
             </div>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
-              Flo
-            </h1>
           </div>
           <div className="flex items-center space-x-3">
-            <Button variant="ghost" size="icon" className="relative">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="relative hover:bg-purple-50"
+              onClick={() => setShowAmaraChat(true)}
+            >
+              <MessageCircle className="w-5 h-5 text-purple-600" />
+              <span className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full flex items-center justify-center">
+                <span className="text-[8px] text-white font-bold">AI</span>
+              </span>
+            </Button>
+            <Button variant="ghost" size="icon" className="relative hover:bg-pink-50">
               <Bell className="w-5 h-5 text-gray-600" />
               <span className="absolute top-1 right-1 w-2 h-2 bg-pink-500 rounded-full"></span>
             </Button>
-            <Button variant="ghost" size="icon">
+            <Button variant="ghost" size="icon" className="hover:bg-purple-50">
               <User className="w-5 h-5 text-gray-600" />
             </Button>
           </div>
@@ -84,8 +98,12 @@ const HomePage = () => {
                   <Plus className="w-4 h-4 mr-2" />
                   Log Symptoms
                 </Button>
-                <Button variant="outline" className="border-pink-300 text-pink-600 hover:bg-pink-50">
-                  <TrendingUp className="w-4 h-4" />
+                <Button 
+                  variant="outline" 
+                  className="border-purple-300 text-purple-600 hover:bg-purple-50"
+                  onClick={() => setShowAmaraChat(true)}
+                >
+                  <MessageCircle className="w-4 h-4" />
                 </Button>
               </div>
             </CardContent>
@@ -149,9 +167,13 @@ const HomePage = () => {
         </div>
       </main>
 
-      {/* Symptom Tracker Modal */}
+      {/* Modals */}
       {showSymptomTracker && (
         <SymptomTracker onClose={() => setShowSymptomTracker(false)} />
+      )}
+      
+      {showAmaraChat && (
+        <AmaraChat onClose={() => setShowAmaraChat(false)} />
       )}
 
       {/* Bottom Navigation */}
@@ -162,9 +184,12 @@ const HomePage = () => {
               <Calendar className="w-6 h-6" />
               <span className="text-xs font-medium">Home</span>
             </button>
-            <button className="flex flex-col items-center space-y-1 text-gray-400 hover:text-pink-600 transition-colors">
-              <Heart className="w-6 h-6" />
-              <span className="text-xs">Health</span>
+            <button 
+              className="flex flex-col items-center space-y-1 text-gray-400 hover:text-purple-600 transition-colors"
+              onClick={() => setShowAmaraChat(true)}
+            >
+              <MessageCircle className="w-6 h-6" />
+              <span className="text-xs">AMARA</span>
             </button>
             <button className="flex flex-col items-center space-y-1 text-gray-400 hover:text-pink-600 transition-colors">
               <Activity className="w-6 h-6" />
