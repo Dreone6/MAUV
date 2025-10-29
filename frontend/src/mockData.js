@@ -6,7 +6,7 @@ export const mockUser = {
   email: 'sarah@example.com',
   cycleLength: 28,
   periodLength: 5,
-  lastPeriodStart: '2025-01-15',
+  lastPeriodStart: '2025-01-24', // Updated to more recent date
   profileSetup: true
 };
 
