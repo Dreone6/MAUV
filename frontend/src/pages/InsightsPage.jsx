@@ -179,45 +179,36 @@ const InsightsPage = () => {
         <TabsContent value="patterns" className="space-y-4">
           <Card className="border-0 shadow-lg">
             <CardHeader>
-              <CardTitle>Symptom Patterns</CardTitle>
+              <CardTitle>Common Symptoms</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div>
-                <div className="flex justify-between mb-2">
-                  <span className="text-sm font-medium">Cramps</span>
-                  <span className="text-sm text-gray-600">Day 1-2</span>
+              {insights.commonSymptoms.map((symptom, index) => (
+                <div key={index}>
+                  <div className="flex justify-between mb-2">
+                    <span className="text-sm font-medium capitalize">{symptom.replace('-', ' ')}</span>
+                    <span className="text-sm text-gray-600">Frequently logged</span>
+                  </div>
+                  <Progress value={(3 - index) * 30} className="h-2" />
                 </div>
-                <Progress value={70} className="h-2" />
-              </div>
-              <div>
-                <div className="flex justify-between mb-2">
-                  <span className="text-sm font-medium">Mood Swings</span>
-                  <span className="text-sm text-gray-600">Day 24-26</span>
-                </div>
-                <Progress value={50} className="h-2" />
-              </div>
-              <div>
-                <div className="flex justify-between mb-2">
-                  <span className="text-sm font-medium">Fatigue</span>
-                  <span className="text-sm text-gray-600">Day 1-3</span>
-                </div>
-                <Progress value={60} className="h-2" />
-              </div>
+              ))}
+              {insights.commonSymptoms.length === 0 && (
+                <p className="text-sm text-gray-600">No symptoms logged yet. Start tracking to see patterns!</p>
+              )}
             </CardContent>
           </Card>
 
           <Card className="border-0 shadow-lg">
             <CardHeader>
-              <CardTitle>Cycle Trends</CardTitle>
+              <CardTitle>Cycle Statistics</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 gap-4">
                 <div className="p-4 bg-pink-50 rounded-lg text-center">
-                  <p className="text-2xl font-bold text-pink-600">28</p>
+                  <p className="text-2xl font-bold text-pink-600">{insights.avgCycle}</p>
                   <p className="text-sm text-gray-600">Avg Cycle Length</p>
                 </div>
                 <div className="p-4 bg-purple-50 rounded-lg text-center">
-                  <p className="text-2xl font-bold text-purple-600">5</p>
+                  <p className="text-2xl font-bold text-purple-600">{insights.avgPeriod}</p>
                   <p className="text-sm text-gray-600">Avg Period Days</p>
                 </div>
               </div>
