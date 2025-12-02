@@ -7,12 +7,14 @@ import InsightsPage from '../pages/InsightsPage';
 import ProfilePage from '../pages/ProfilePage';
 import AmaraChat from './AmaraChat';
 import OnboardingFlow from './OnboardingFlow';
+import SplashScreen from './SplashScreen';
 import { checkOnboardingStatus } from '../services/dataService';
 
 const MainLayout = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [showAmaraChat, setShowAmaraChat] = useState(false);
   const [isOnboarded, setIsOnboarded] = useState(null); // null = checking, true/false = status
+  const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
     // Check if user has completed onboarding
@@ -27,6 +29,15 @@ const MainLayout = () => {
   const handleOnboardingComplete = () => {
     setIsOnboarded(true);
   };
+
+  const handleSplashComplete = () => {
+    setShowSplash(false);
+  };
+
+  // Show splash screen first
+  if (showSplash) {
+    return <SplashScreen onComplete={handleSplashComplete} />;
+  }
 
   // Show loading or onboarding
   if (isOnboarded === null) {
