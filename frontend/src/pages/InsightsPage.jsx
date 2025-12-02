@@ -159,35 +159,19 @@ const InsightsPage = () => {
               <CardTitle>This Month's Highlights</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              <div className="flex items-start space-x-3 p-3 bg-pink-50 rounded-lg">
-                <div className="w-10 h-10 rounded-full bg-pink-200 flex items-center justify-center flex-shrink-0">
-                  <TrendingUp className="w-5 h-5 text-pink-600" />
+              {insights.highlights.map((highlight, index) => (
+                <div key={index} className={`flex items-start space-x-3 p-3 ${highlight.color} rounded-lg`}>
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pink-400 to-purple-500 flex items-center justify-center flex-shrink-0">
+                    {index === 0 ? <TrendingUp className="w-5 h-5 text-white" /> : 
+                     index === 1 ? <Activity className="w-5 h-5 text-white" /> :
+                     <Lightbulb className="w-5 h-5 text-white" />}
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-800">{highlight.title}</h4>
+                    <p className="text-sm text-gray-600">{highlight.description}</p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="font-semibold text-gray-800">Regular Cycle</h4>
-                  <p className="text-sm text-gray-600">Your cycle has been consistent for the past 3 months</p>
-                </div>
-              </div>
-
-              <div className="flex items-start space-x-3 p-3 bg-purple-50 rounded-lg">
-                <div className="w-10 h-10 rounded-full bg-purple-200 flex items-center justify-center flex-shrink-0">
-                  <Activity className="w-5 h-5 text-purple-600" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-gray-800">Symptom Pattern</h4>
-                  <p className="text-sm text-gray-600">You typically experience mild cramps on day 1-2</p>
-                </div>
-              </div>
-
-              <div className="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg">
-                <div className="w-10 h-10 rounded-full bg-blue-200 flex items-center justify-center flex-shrink-0">
-                  <Lightbulb className="w-5 h-5 text-blue-600" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-gray-800">Energy Levels</h4>
-                  <p className="text-sm text-gray-600">Your energy peaks during the follicular phase</p>
-                </div>
-              </div>
+              ))}
             </CardContent>
           </Card>
         </TabsContent>
