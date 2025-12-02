@@ -2,27 +2,26 @@ import React from 'react';
 import { Calendar, Heart, Droplet, Moon } from 'lucide-react';
 import { Card, CardContent } from './ui/card';
 import { Progress } from './ui/progress';
-import { mockUser } from '../mockData';
 
-const CycleInfo = ({ cyclePhase }) => {
+const CycleInfo = ({ cyclePhase, cycleSettings }) => {
   const getPredictions = () => {
     const today = new Date();
-    const lastPeriod = new Date(mockUser.lastPeriodStart);
+    const lastPeriod = new Date(cycleSettings.lastPeriodStart);
     const daysSinceLastPeriod = Math.floor((today - lastPeriod) / (1000 * 60 * 60 * 24));
     
-    const daysUntilNextPeriod = mockUser.cycleLength - daysSinceLastPeriod;
+    const daysUntilNextPeriod = cycleSettings.cycleLength - daysSinceLastPeriod;
     const daysUntilOvulation = 14 - daysSinceLastPeriod;
     const daysUntilFertileWindow = 10 - daysSinceLastPeriod;
 
     return {
-      nextPeriod: daysUntilNextPeriod > 0 ? daysUntilNextPeriod : mockUser.cycleLength + daysUntilNextPeriod,
+      nextPeriod: daysUntilNextPeriod > 0 ? daysUntilNextPeriod : cycleSettings.cycleLength + daysUntilNextPeriod,
       ovulation: daysUntilOvulation > 0 ? daysUntilOvulation : 'Passed',
       fertileWindow: daysUntilFertileWindow > 0 ? daysUntilFertileWindow : (daysUntilFertileWindow + 7 > 0 ? 'Now' : 'Passed')
     };
   };
 
   const predictions = getPredictions();
-  const cycleProgress = (cyclePhase.day / mockUser.cycleLength) * 100;
+  const cycleProgress = (cyclePhase.day / cycleSettings.cycleLength) * 100;
 
   return (
     <div className="space-y-4">
