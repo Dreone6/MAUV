@@ -1,24 +1,43 @@
-import React, { useState, useMemo } from 'react';
-import { Plus, TrendingUp, MessageCircle } from 'lucide-react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { Plus, TrendingUp } from 'lucide-react';
 import { Card, CardContent } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import SymptomTracker from '../components/SymptomTracker';
 import InsightsPanel from '../components/InsightsPanel';
 import CycleInfo from '../components/CycleInfo';
-import { mockUser } from '../mockData';
+import { getCycleSettings, getSymptomLog } from '../services/dataService';
 
 const HomePage = () => {
   const [showSymptomTracker, setShowSymptomTracker] = useState(false);
+  const [cycleSettings, setCycleSettings] = useState(null);
+  const [todayLog, setTodayLog] = useState(null);
+
+  useEffect(() => {
+    // Load real data from IndexedDB
+    const loadData = async () => {
+      const settings = await getCycleSettings();
+      setCycleSettings(settings);
+
+      const today = new Date().toISOString().split('T')[0];
+      const log = await getSymptomLog(today);
+      setTodayLog(log);
+    };
+    loadData();
+  }, []);
 
   const cyclePhase = useMemo(() => {
+    if (!cycleSettings || !cycleSettings.lastPeriodStart) {
+      return { phase: 'unknown', day: 0, color: 'from-gray-400 to-gray-500' };
+    }
+
     const today = new Date();
-    const lastPeriod = new Date(mockUser.lastPeriodStart);
+    const lastPeriod = new Date(cycleSettings.lastPeriodStart);
     const daysSinceLastPeriod = Math.floor((today - lastPeriod) / (1000 * 60 * 60 * 24));
     
     // Calculate current cycle day (wraps around based on cycle length)
-    const cycleDay = ((daysSinceLastPeriod % mockUser.cycleLength) + 1);
+    const cycleDay = ((daysSinceLastPeriod % cycleSettings.cycleLength) + 1);
     
-    if (cycleDay <= mockUser.periodLength) {
+    if (cycleDay <= cycleSettings.periodLength) {
       return { phase: 'period', day: cycleDay, color: 'from-red-400 to-pink-500' };
     } else if (cycleDay > 10 && cycleDay <= 16) {
       return { phase: 'fertile', day: cycleDay, color: 'from-purple-400 to-pink-400' };
@@ -27,7 +46,15 @@ const HomePage = () => {
     } else {
       return { phase: 'follicular', day: cycleDay, color: 'from-teal-400 to-blue-400' };
     }
-  }, []);
+  }, [cycleSettings]);
+
+  if (!cycleSettings) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <p className="text-gray-600">Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -41,6 +68,11 @@ const HomePage = () => {
                 {cyclePhase.phase} Phase
               </h2>
               <p className="text-sm text-gray-600 mt-1">Day {cyclePhase.day} of your cycle</p>
+              {todayLog && (
+                <p className="text-xs text-purple-600 mt-2">
+                  ✓ You've logged today's symptoms
+                </p>
+              )}
             </div>
             <div className={`w-24 h-24 rounded-full bg-gradient-to-br ${cyclePhase.color} flex items-center justify-center shadow-lg`}>
               <span className="text-white text-2xl font-bold">{cyclePhase.day}</span>
@@ -53,7 +85,7 @@ const HomePage = () => {
               onClick={() => setShowSymptomTracker(true)}
             >
               <Plus className="w-4 h-4 mr-2" />
-              Log Symptoms
+              {todayLog ? 'Update Symptoms' : 'Log Symptoms'}
             </Button>
             <Button 
               variant="outline" 
@@ -66,14 +98,21 @@ const HomePage = () => {
       </Card>
 
       {/* Cycle Info & Quick Actions */}
-      <CycleInfo cyclePhase={cyclePhase} />
+      <CycleInfo cyclePhase={cyclePhase} cycleSettings={cycleSettings} />
 
       {/* Insights */}
       <InsightsPanel />
 
       {/* Symptom Tracker Modal */}
       {showSymptomTracker && (
-        <SymptomTracker onClose={() => setShowSymptomTracker(false)} />
+        <SymptomTracker 
+          onClose={() => setShowSymptomTracker(false)}
+          onSave={() => {
+            // Reload today's log after saving
+            const today = new Date().toISOString().split('T')[0];
+            getSymptomLog(today).then(setTodayLog);
+          }}
+        />
       )}
     </div>
   );
