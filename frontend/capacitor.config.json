@@ -1,5 +1,21 @@
 {
   "appId": "com.mauv.app",
   "appName": "MAUV",
-  "webDir": "build"
+  "webDir": "build",
+  "server": {
+    "hostname": "mauv.app",
+    "androidScheme": "https",
+    "iosScheme": "https"
+  },
+  "ios": {
+    "contentInset": "always",
+    "preferredContentMode": "mobile"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 3000,
+      "backgroundColor": "#000000",
+      "showSpinner": false
+    }
+  }
 }
