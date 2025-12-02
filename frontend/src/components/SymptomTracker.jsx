@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Smile, Frown, Zap, Activity } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
@@ -6,12 +6,29 @@ import { Textarea } from './ui/textarea';
 import { Badge } from './ui/badge';
 import { symptomCategories } from '../mockData';
 import { toast } from '../hooks/use-toast';
+import { getSymptomLog, saveSymptomLog } from '../services/dataService';
 
-const SymptomTracker = ({ onClose }) => {
+const SymptomTracker = ({ onClose, onSave }) => {
+  const today = new Date().toISOString().split('T')[0];
+  
   const [selectedMood, setSelectedMood] = useState('');
   const [selectedSymptoms, setSelectedSymptoms] = useState([]);
   const [selectedFlow, setSelectedFlow] = useState('');
   const [notes, setNotes] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Load existing log for today if it exists
+    getSymptomLog(today).then(log => {
+      if (log) {
+        setSelectedMood(log.mood || '');
+        setSelectedSymptoms(log.symptoms || []);
+        setSelectedFlow(log.flow || '');
+        setNotes(log.notes || '');
+      }
+      setLoading(false);
+    });
+  }, [today]);
 
   const toggleSymptom = (symptom) => {
     setSelectedSymptoms(prev => 
@@ -21,13 +38,30 @@ const SymptomTracker = ({ onClose }) => {
     );
   };
 
-  const handleSave = () => {
-    // In real app, this would save to local storage
-    toast({
-      title: "Symptoms Logged!",
-      description: "Your symptoms have been recorded for today.",
-    });
-    onClose();
+  const handleSave = async () => {
+    try {
+      await saveSymptomLog(today, {
+        mood: selectedMood,
+        symptoms: selectedSymptoms,
+        flow: selectedFlow,
+        notes: notes
+      });
+      
+      toast({
+        title: "Symptoms Logged!",
+        description: "Your symptoms have been recorded for today.",
+      });
+      
+      if (onSave) onSave();
+      onClose();
+    } catch (error) {
+      console.error('Failed to save symptom log:', error);
+      toast({
+        title: "Error",
+        description: "Failed to save your symptoms. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   const moodEmojis = {
