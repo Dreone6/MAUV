@@ -143,14 +143,18 @@ const OnboardingFlow = ({ onComplete }) => {
                   <button
                     key={avatar.id}
                     onClick={() => handleAvatarSelect(avatar)}
-                    className={`p-4 rounded-xl border-2 transition-all hover:scale-105 ${
+                    className={`p-3 rounded-xl border-2 transition-all hover:scale-105 ${
                       selectedAvatar?.id === avatar.id
                         ? 'border-purple-500 bg-purple-50 shadow-lg ring-2 ring-purple-300'
                         : 'border-gray-200 hover:border-purple-300'
                     }`}
                   >
-                    <div className={`w-16 h-16 mx-auto mb-2 rounded-full bg-gradient-to-br ${avatar.color} flex items-center justify-center text-3xl`}>
-                      {avatar.emoji}
+                    <div className={`w-20 h-20 mx-auto mb-2 rounded-full overflow-hidden border-2 border-white shadow-md bg-gradient-to-br ${avatar.color}`}>
+                      <img 
+                        src={avatar.image} 
+                        alt={avatar.name}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <p className="text-xs font-medium text-gray-800">{avatar.name}</p>
                   </button>
