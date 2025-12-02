@@ -7,18 +7,18 @@ import { Label } from './ui/label';
 import { saveProfile, saveCycleSettings } from '../services/dataService';
 
 const AVATARS = [
-  { id: 'fairy_1', emoji: '🧚‍♀️', name: 'Luna', color: 'from-purple-400 to-pink-400', preset: { skin: 'light', hair: 'purple', eyes: 'blue', wings: 'butterfly', accessories: ['crown'] } },
-  { id: 'fairy_2', emoji: '✨', name: 'Sparkle', color: 'from-blue-400 to-purple-400', preset: { skin: 'medium', hair: 'blonde', eyes: 'green', wings: 'dragonfly', accessories: [] } },
-  { id: 'fairy_3', emoji: '🌸', name: 'Blossom', color: 'from-pink-400 to-rose-400', preset: { skin: 'light', hair: 'pink', eyes: 'brown', wings: 'flower', accessories: ['tiara'] } },
-  { id: 'fairy_4', emoji: '💜', name: 'Violet', color: 'from-purple-500 to-indigo-400', preset: { skin: 'tan', hair: 'violet', eyes: 'purple', wings: 'butterfly', accessories: [] } },
-  { id: 'fairy_5', emoji: '🌙', name: 'Moon', color: 'from-indigo-400 to-blue-400', preset: { skin: 'medium', hair: 'silver', eyes: 'blue', wings: 'moon', accessories: ['crescent'] } },
-  { id: 'fairy_6', emoji: '🌺', name: 'Hibiscus', color: 'from-rose-400 to-pink-500', preset: { skin: 'dark', hair: 'black', eyes: 'brown', wings: 'tropical', accessories: ['flower'] } },
-  { id: 'fairy_7', emoji: '🌟', name: 'Star', color: 'from-yellow-400 to-orange-400', preset: { skin: 'light', hair: 'golden', eyes: 'amber', wings: 'star', accessories: ['star'] } },
-  { id: 'fairy_8', emoji: '🦋', name: 'Azure', color: 'from-cyan-400 to-blue-500', preset: { skin: 'medium', hair: 'blue', eyes: 'teal', wings: 'butterfly', accessories: [] } },
-  { id: 'fairy_9', emoji: '🌈', name: 'Rainbow', color: 'from-pink-400 via-purple-400 to-blue-400', preset: { skin: 'tan', hair: 'rainbow', eyes: 'violet', wings: 'rainbow', accessories: ['glasses'] } },
-  { id: 'fairy_10', emoji: '🍃', name: 'Willow', color: 'from-green-400 to-emerald-500', preset: { skin: 'medium', hair: 'brown', eyes: 'green', wings: 'leaf', accessories: [] } },
-  { id: 'fairy_11', emoji: '❄️', name: 'Frost', color: 'from-blue-200 to-cyan-300', preset: { skin: 'light', hair: 'white', eyes: 'ice-blue', wings: 'ice', accessories: ['tiara'] } },
-  { id: 'fairy_12', emoji: '🔥', name: 'Ember', color: 'from-orange-400 to-red-500', preset: { skin: 'dark', hair: 'red', eyes: 'amber', wings: 'fire', accessories: [] } },
+  { id: 'fairy_1', image: '/avatars/fairy_1.jpg', name: 'Luna', color: 'from-purple-400 to-pink-400', preset: { skin: 'light', hair: 'purple', eyes: 'blue', wings: 'butterfly', accessories: ['crown'] } },
+  { id: 'fairy_2', image: '/avatars/fairy_2.jpg', name: 'Sparkle', color: 'from-blue-400 to-purple-400', preset: { skin: 'medium', hair: 'blonde', eyes: 'green', wings: 'dragonfly', accessories: [] } },
+  { id: 'fairy_3', image: '/avatars/fairy_3.jpg', name: 'Blossom', color: 'from-pink-400 to-rose-400', preset: { skin: 'light', hair: 'pink', eyes: 'brown', wings: 'flower', accessories: ['tiara'] } },
+  { id: 'fairy_4', image: '/avatars/fairy_4.jpg', name: 'Violet', color: 'from-purple-500 to-indigo-400', preset: { skin: 'tan', hair: 'violet', eyes: 'purple', wings: 'butterfly', accessories: [] } },
+  { id: 'fairy_5', image: '/avatars/fairy_5.jpg', name: 'Moon', color: 'from-indigo-400 to-blue-400', preset: { skin: 'medium', hair: 'silver', eyes: 'blue', wings: 'moon', accessories: ['crescent'] } },
+  { id: 'fairy_6', image: '/avatars/fairy_6.jpg', name: 'Hibiscus', color: 'from-rose-400 to-pink-500', preset: { skin: 'dark', hair: 'black', eyes: 'brown', wings: 'tropical', accessories: ['flower'] } },
+  { id: 'fairy_7', image: '/avatars/fairy_7.jpg', name: 'Star', color: 'from-yellow-400 to-orange-400', preset: { skin: 'light', hair: 'golden', eyes: 'amber', wings: 'star', accessories: ['star'] } },
+  { id: 'fairy_8', image: '/avatars/fairy_8.jpg', name: 'Azure', color: 'from-cyan-400 to-blue-500', preset: { skin: 'medium', hair: 'blue', eyes: 'teal', wings: 'butterfly', accessories: [] } },
+  { id: 'fairy_9', image: '/avatars/fairy_9.jpg', name: 'Rainbow', color: 'from-pink-400 via-purple-400 to-blue-400', preset: { skin: 'tan', hair: 'rainbow', eyes: 'violet', wings: 'rainbow', accessories: ['glasses'] } },
+  { id: 'fairy_10', image: '/avatars/fairy_10.jpg', name: 'Willow', color: 'from-green-400 to-emerald-500', preset: { skin: 'medium', hair: 'brown', eyes: 'green', wings: 'leaf', accessories: [] } },
+  { id: 'fairy_11', image: '/avatars/fairy_11.jpg', name: 'Frost', color: 'from-blue-200 to-cyan-300', preset: { skin: 'light', hair: 'white', eyes: 'ice-blue', wings: 'ice', accessories: ['tiara'] } },
+  { id: 'fairy_12', image: '/avatars/fairy_12.jpg', name: 'Ember', color: 'from-orange-400 to-red-500', preset: { skin: 'dark', hair: 'red', eyes: 'amber', wings: 'fire', accessories: [] } },
 ];
 
 const OnboardingFlow = ({ onComplete }) => {
