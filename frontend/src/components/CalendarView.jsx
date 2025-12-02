@@ -143,22 +143,31 @@ const CalendarView = () => {
             }
 
             const date = new Date(year, month, day);
+            const dateStr = date.toISOString().split('T')[0];
             const dayInfo = getDayType(date);
+            const hasSymptoms = symptomLogs[dateStr];
             const isToday = new Date().toDateString() === date.toDateString();
 
             return (
               <button
                 key={day}
                 onClick={() => setSelectedDate(date)}
-                className={`aspect-square rounded-lg flex items-center justify-center text-sm font-medium transition-all hover:scale-105 ${
+                className={`aspect-square rounded-lg flex flex-col items-center justify-center text-sm font-medium transition-all hover:scale-105 relative ${
                   dayInfo.color
                 } ${
                   isToday ? 'ring-2 ring-pink-500 ring-offset-2' : ''
-                } hover:shadow-md relative`}
+                } hover:shadow-md`}
               >
-                {day}
+                <span>{day}</span>
+                {hasSymptoms && (
+                  <div className="absolute bottom-1 flex space-x-0.5">
+                    {hasSymptoms.mood && <div className="w-1 h-1 rounded-full bg-yellow-600"></div>}
+                    {hasSymptoms.symptoms && hasSymptoms.symptoms.length > 0 && <div className="w-1 h-1 rounded-full bg-blue-600"></div>}
+                    {hasSymptoms.flow && <div className="w-1 h-1 rounded-full bg-red-600"></div>}
+                  </div>
+                )}
                 {dayInfo.type === 'ovulation' && (
-                  <Circle className="w-3 h-3 text-white absolute bottom-1 fill-white" />
+                  <Circle className="w-3 h-3 text-white absolute top-1 fill-white" />
                 )}
               </button>
             );
@@ -171,8 +180,22 @@ const CalendarView = () => {
             <p className="text-sm font-semibold text-gray-700 mb-2">
               {selectedDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
             </p>
-            <div className="flex space-x-2">
+            <div className="flex flex-wrap gap-2">
               <Badge className="bg-pink-500 text-white">{getDayType(selectedDate).label || 'Normal Day'}</Badge>
+              {symptomLogs[selectedDate.toISOString().split('T')[0]] && (
+                <>
+                  {symptomLogs[selectedDate.toISOString().split('T')[0]].mood && (
+                    <Badge variant="outline" className="border-yellow-400 text-yellow-700">
+                      Mood: {symptomLogs[selectedDate.toISOString().split('T')[0]].mood}
+                    </Badge>
+                  )}
+                  {symptomLogs[selectedDate.toISOString().split('T')[0]].flow && (
+                    <Badge variant="outline" className="border-red-400 text-red-700">
+                      Flow: {symptomLogs[selectedDate.toISOString().split('T')[0]].flow}
+                    </Badge>
+                  )}
+                </>
+              )}
             </div>
           </div>
         )}
