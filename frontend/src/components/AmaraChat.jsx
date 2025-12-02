@@ -15,7 +15,7 @@ const AmaraChat = ({ onClose }) => {
     {
       id: '1',
       type: 'amara',
-      text: "Hey bestie! I'm AMARA, your personal wellness companion. Whether you have questions about your cycle, need some support, or just want to chat about health stuff - I'm here for you! What's on your mind? ✨",
+      text: "Hey bestie! I'm AMARA, your personal wellness companion. I'm here to support you with info about your cycle, answer health questions, and just be your supportive friend through it all! ✨\n\nWhat's on your mind today?",
       timestamp: new Date()
     }
   ]);
