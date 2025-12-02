@@ -120,74 +120,14 @@ const OnboardingFlow = ({ onComplete }) => {
           </>
         )}
 
-        {/* Step 2: Avatar Selection */}
+        {/* Step 2: Cycle Settings */}
         {step === 2 && (
           <>
             <CardHeader className="text-center">
               <CardTitle className="text-2xl font-bold">
-                Choose Your Fairy Avatar
+                Tell Us About Your Cycle
               </CardTitle>
-              <p className="text-gray-600 mt-2">Pick one of 12 magical fairies - you can customize it later!</p>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                {AVATARS.map((avatar) => (
-                  <button
-                    key={avatar.id}
-                    onClick={() => handleAvatarSelect(avatar)}
-                    className={`p-3 rounded-xl border-2 transition-all hover:scale-105 ${
-                      selectedAvatar?.id === avatar.id
-                        ? 'border-purple-500 bg-purple-50 shadow-lg ring-2 ring-purple-300'
-                        : 'border-gray-200 hover:border-purple-300'
-                    }`}
-                  >
-                    <div className={`w-20 h-20 mx-auto mb-2 rounded-full overflow-hidden border-2 border-white shadow-md bg-gradient-to-br ${avatar.color}`}>
-                      <img 
-                        src={avatar.image} 
-                        alt={avatar.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <p className="text-xs font-medium text-gray-800">{avatar.name}</p>
-                  </button>
-                ))}
-              </div>
-
-              <div className="bg-purple-50 border border-purple-200 rounded-lg p-3">
-                <p className="text-xs text-gray-700">
-                  ✨ Each fairy can be customized with different skin tones, hair colors, eye colors, wings, and accessories in your profile settings!
-                </p>
-              </div>
-
-              <div className="flex space-x-3">
-                <Button
-                  variant="outline"
-                  onClick={() => setStep(1)}
-                  className="flex-1"
-                >
-                  Back
-                </Button>
-                <Button
-                  onClick={handleAvatarSubmit}
-                  disabled={!selectedAvatar}
-                  className="flex-1 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white"
-                >
-                  Continue
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </div>
-            </CardContent>
-          </>
-        )}
-
-        {/* Step 3: Cycle Settings */}
-        {step === 3 && (
-          <>
-            <CardHeader className="text-center">
-              <CardTitle className="text-2xl font-bold">
-                Cycle Information
-              </CardTitle>
-              <p className="text-gray-600 mt-2">Help us personalize your experience</p>
+              <p className="text-gray-600 mt-2">Help us personalize your MAUV experience</p>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
@@ -231,6 +171,25 @@ const OnboardingFlow = ({ onComplete }) => {
                   />
                   <p className="text-xs text-gray-500 mt-1">Skip if you prefer to log it later</p>
                 </div>
+
+                <div>
+                  <Label htmlFor="moodBaseline">How are you feeling today?</Label>
+                  <select
+                    id="moodBaseline"
+                    value={moodBaseline}
+                    onChange={(e) => setMoodBaseline(e.target.value)}
+                    className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+                  >
+                    <option value="">Select your mood...</option>
+                    <option value="happy">Happy 😊</option>
+                    <option value="calm">Calm 😌</option>
+                    <option value="neutral">Neutral 😐</option>
+                    <option value="anxious">Anxious 😰</option>
+                    <option value="sad">Sad 😢</option>
+                    <option value="irritable">Irritable 😤</option>
+                  </select>
+                  <p className="text-xs text-gray-500 mt-1">This helps us understand your baseline</p>
+                </div>
               </div>
 
               <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
@@ -243,7 +202,7 @@ const OnboardingFlow = ({ onComplete }) => {
               <div className="flex space-x-3">
                 <Button
                   variant="outline"
-                  onClick={() => setStep(2)}
+                  onClick={() => setStep(1)}
                   className="flex-1"
                 >
                   Back
