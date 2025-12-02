@@ -24,10 +24,10 @@ const AVATARS = [
 const OnboardingFlow = ({ onComplete }) => {
   const [step, setStep] = useState(1);
   const [alias, setAlias] = useState('');
-  const [selectedAvatar, setSelectedAvatar] = useState(null);
   const [cycleLength, setCycleLength] = useState(28);
   const [periodLength, setPeriodLength] = useState(5);
   const [lastPeriodStart, setLastPeriodStart] = useState('');
+  const [moodBaseline, setMoodBaseline] = useState('');
 
   const handleAliasSubmit = () => {
     if (alias.trim()) {
@@ -35,22 +35,13 @@ const OnboardingFlow = ({ onComplete }) => {
     }
   };
 
-  const handleAvatarSelect = (avatar) => {
-    setSelectedAvatar(avatar);
-  };
-
-  const handleAvatarSubmit = () => {
-    if (selectedAvatar) {
-      setStep(3);
-    }
-  };
-
   const handleComplete = async () => {
     try {
-      // Save profile
+      // Save profile (without avatar for now)
       await saveProfile({
         alias: alias.trim(),
-        avatarId: selectedAvatar.id,
+        avatarId: null, // No avatar selected yet
+        avatarConfig: null,
         createdAt: new Date().toISOString()
       });
 
@@ -58,7 +49,8 @@ const OnboardingFlow = ({ onComplete }) => {
       await saveCycleSettings({
         cycleLength: parseInt(cycleLength),
         periodLength: parseInt(periodLength),
-        lastPeriodStart: lastPeriodStart || new Date().toISOString().split('T')[0]
+        lastPeriodStart: lastPeriodStart || new Date().toISOString().split('T')[0],
+        moodBaseline: moodBaseline
       });
 
       onComplete();
