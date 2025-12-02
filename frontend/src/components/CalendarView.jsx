@@ -1,13 +1,32 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Circle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
-import { mockUser } from '../mockData';
+import { getCycleSettings, getAllSymptomLogs } from '../services/dataService';
 
 const CalendarView = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(null);
+  const [cycleSettings, setCycleSettings] = useState(null);
+  const [symptomLogs, setSymptomLogs] = useState({});
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    const settings = await getCycleSettings();
+    setCycleSettings(settings);
+
+    const logs = await getAllSymptomLogs();
+    // Convert array to object keyed by date for easy lookup
+    const logsMap = {};
+    logs.forEach(log => {
+      logsMap[log.date] = log;
+    });
+    setSymptomLogs(logsMap);
+  };
 
   const getDaysInMonth = (date) => {
     const year = date.getFullYear();
@@ -21,11 +40,15 @@ const CalendarView = () => {
   };
 
   const getDayType = (date) => {
-    const lastPeriod = new Date(mockUser.lastPeriodStart);
-    const daysDiff = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
-    const cycleDay = ((daysDiff % mockUser.cycleLength) + mockUser.cycleLength) % mockUser.cycleLength;
+    if (!cycleSettings || !cycleSettings.lastPeriodStart) {
+      return { type: 'normal', color: 'bg-gray-100', label: '' };
+    }
 
-    if (cycleDay >= 0 && cycleDay < mockUser.periodLength) {
+    const lastPeriod = new Date(cycleSettings.lastPeriodStart);
+    const daysDiff = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
+    const cycleDay = ((daysDiff % cycleSettings.cycleLength) + cycleSettings.cycleLength) % cycleSettings.cycleLength;
+
+    if (cycleDay >= 0 && cycleDay < cycleSettings.periodLength) {
       return { type: 'period', color: 'bg-red-400', label: 'Period' };
     } else if (cycleDay >= 10 && cycleDay <= 16) {
       return { type: 'fertile', color: 'bg-purple-300', label: 'Fertile' };
@@ -60,6 +83,14 @@ const CalendarView = () => {
 
   const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+  if (!cycleSettings) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <p className="text-gray-600">Loading calendar...</p>
+      </div>
+    );
+  }
 
   return (
     <Card className="border-0 shadow-lg bg-white/90 backdrop-blur-sm">
