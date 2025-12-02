@@ -89,14 +89,20 @@ const OnboardingFlow = ({ onComplete }) => {
                   <Sparkles className="w-5 h-5 mr-2 text-purple-600" />
                   Choose Your Alias
                 </h3>
-                <p className="text-sm text-gray-600 mb-4">
-                  MAUV is completely anonymous. Pick a magical name that represents you!
+                <p className="text-sm text-gray-600 mb-2">
+                  MAUV is <strong>completely anonymous</strong>. Pick a magical name that represents you!
                 </p>
+                <div className="bg-pink-50 border border-pink-200 rounded-lg p-3 mb-4">
+                  <p className="text-xs text-gray-700">
+                    🔒 <strong>No real names required.</strong> Your identity stays private. 
+                    Only you will see this alias in the app.
+                  </p>
+                </div>
                 <div className="space-y-2">
-                  <Label htmlFor="alias">Your Alias</Label>
+                  <Label htmlFor="alias">Your Magical Alias</Label>
                   <Input
                     id="alias"
-                    placeholder="e.g., Luna, Sage, River..."
+                    placeholder="e.g., Luna, Sage, River, Willow..."
                     value={alias}
                     onChange={(e) => setAlias(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && handleAliasSubmit()}
@@ -104,7 +110,9 @@ const OnboardingFlow = ({ onComplete }) => {
                     maxLength={20}
                     autoFocus
                   />
-                  <p className="text-xs text-gray-500">No real names needed - stay anonymous!</p>
+                  <p className="text-xs text-gray-500">
+                    Choose any name that feels right - no personal information needed!
+                  </p>
                 </div>
               </div>
 
