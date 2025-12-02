@@ -133,28 +133,34 @@ const OnboardingFlow = ({ onComplete }) => {
           <>
             <CardHeader className="text-center">
               <CardTitle className="text-2xl font-bold">
-                Choose Your Avatar
+                Choose Your Fairy Avatar
               </CardTitle>
-              <p className="text-gray-600 mt-2">Pick a fairy that resonates with you</p>
+              <p className="text-gray-600 mt-2">Pick one of 12 magical fairies - you can customize it later!</p>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {AVATARS.map((avatar) => (
                   <button
                     key={avatar.id}
                     onClick={() => handleAvatarSelect(avatar)}
-                    className={`p-6 rounded-2xl border-2 transition-all hover:scale-105 ${
+                    className={`p-4 rounded-xl border-2 transition-all hover:scale-105 ${
                       selectedAvatar?.id === avatar.id
-                        ? 'border-purple-500 bg-purple-50 shadow-lg'
+                        ? 'border-purple-500 bg-purple-50 shadow-lg ring-2 ring-purple-300'
                         : 'border-gray-200 hover:border-purple-300'
                     }`}
                   >
-                    <div className={`w-20 h-20 mx-auto mb-3 rounded-full bg-gradient-to-br ${avatar.color} flex items-center justify-center text-4xl`}>
+                    <div className={`w-16 h-16 mx-auto mb-2 rounded-full bg-gradient-to-br ${avatar.color} flex items-center justify-center text-3xl`}>
                       {avatar.emoji}
                     </div>
-                    <p className="text-sm font-medium text-gray-800">{avatar.name}</p>
+                    <p className="text-xs font-medium text-gray-800">{avatar.name}</p>
                   </button>
                 ))}
+              </div>
+
+              <div className="bg-purple-50 border border-purple-200 rounded-lg p-3">
+                <p className="text-xs text-gray-700">
+                  ✨ Each fairy can be customized with different skin tones, hair colors, eye colors, wings, and accessories in your profile settings!
+                </p>
               </div>
 
               <div className="flex space-x-3">
