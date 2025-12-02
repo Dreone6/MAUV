@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calendar, MessageCircle, Activity, User, Bell } from 'lucide-react';
 import { Button } from './ui/button';
 import HomePage from '../pages/HomePage';
@@ -6,10 +6,45 @@ import CalendarPage from '../pages/CalendarPage';
 import InsightsPage from '../pages/InsightsPage';
 import ProfilePage from '../pages/ProfilePage';
 import AmaraChat from './AmaraChat';
+import OnboardingFlow from './OnboardingFlow';
+import { checkOnboardingStatus } from '../services/dataService';
 
 const MainLayout = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [showAmaraChat, setShowAmaraChat] = useState(false);
+  const [isOnboarded, setIsOnboarded] = useState(null); // null = checking, true/false = status
+
+  useEffect(() => {
+    // Check if user has completed onboarding
+    checkOnboardingStatus().then(status => {
+      setIsOnboarded(status);
+    }).catch(err => {
+      console.error('Error checking onboarding:', err);
+      setIsOnboarded(false);
+    });
+  }, []);
+
+  const handleOnboardingComplete = () => {
+    setIsOnboarded(true);
+  };
+
+  // Show loading or onboarding
+  if (isOnboarded === null) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center animate-pulse">
+            <img src="/mauv_logo.png" alt="MAUV" className="w-10 h-10" />
+          </div>
+          <p className="text-gray-600">Loading MAUV...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isOnboarded) {
+    return <OnboardingFlow onComplete={handleOnboardingComplete} />;
+  }
 
   const renderContent = () => {
     switch (activeTab) {
