@@ -31,7 +31,7 @@ const CycleInfo = ({ cyclePhase, cycleSettings }) => {
           <div className="mb-4">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-medium text-gray-700">Cycle Progress</span>
-              <span className="text-sm font-bold text-purple-600">{cyclePhase.day}/{mockUser.cycleLength} days</span>
+              <span className="text-sm font-bold text-purple-600">{cyclePhase.day}/{cycleSettings.cycleLength} days</span>
             </div>
             <Progress value={cycleProgress} className="h-3" />
           </div>
