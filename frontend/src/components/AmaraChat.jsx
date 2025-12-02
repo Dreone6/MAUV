@@ -143,7 +143,7 @@ const AmaraChat = ({ onClose }) => {
         </CardContent>
 
         <div className="border-t border-pink-100 p-4 flex-shrink-0">
-          <div className="flex space-x-2">
+          <div className="flex space-x-2 mb-2">
             <Textarea
               placeholder="Ask me anything about your health..."
               value={input}
@@ -160,8 +160,13 @@ const AmaraChat = ({ onClose }) => {
               <Send className="w-4 h-4" />
             </Button>
           </div>
-          <p className="text-xs text-gray-500 mt-2 text-center">
-            Powered by AMARA AI - Your supportive health companion
+          <div className="bg-purple-50 border border-purple-200 rounded-lg p-2 mb-1">
+            <p className="text-[10px] text-gray-600 text-center">
+              \ud83d\udc9c AMARA is an AI companion, not a medical professional. For medical concerns, please consult a healthcare provider.
+            </p>
+          </div>
+          <p className="text-xs text-gray-500 text-center">
+            Your privacy matters: AMARA only receives summarized, anonymized context
           </p>
         </div>
       </Card>
