@@ -1,12 +1,119 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TrendingUp, BookOpen, Lightbulb, Activity } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
 import { Progress } from '../components/ui/progress';
 import { Badge } from '../components/ui/badge';
+import { getCycleSettings, getAllSymptomLogs, getCycleLogs } from '../services/dataService';
 
 const InsightsPage = () => {
   const [selectedTab, setSelectedTab] = useState('overview');
+  const [cycleSettings, setCycleSettings] = useState(null);
+  const [symptomLogs, setSymptomLogs] = useState([]);
+  const [insights, setInsights] = useState(null);
+
+  useEffect(() => {
+    loadDataAndCalculate();
+  }, []);
+
+  const loadDataAndCalculate = async () => {
+    const settings = await getCycleSettings();
+    const logs = await getAllSymptomLogs();
+    
+    setCycleSettings(settings);
+    setSymptomLogs(logs);
+
+    // Calculate insights from real data
+    const calculated = calculateInsights(settings, logs);
+    setInsights(calculated);
+  };
+
+  const calculateInsights = (settings, logs) => {
+    if (!logs || logs.length === 0) {
+      return {
+        cycleHealth: 85,
+        avgCycle: settings.cycleLength,
+        avgPeriod: settings.periodLength,
+        commonSymptoms: ['No data yet'],
+        moodTrend: 'neutral',
+        suggestion: 'Start logging your daily symptoms to see personalized insights!',
+        highlights: [
+          {
+            title: 'Start Tracking',
+            description: 'Log your symptoms daily to unlock personalized health insights',
+            color: 'bg-pink-50'
+          }
+        ]
+      };
+    }
+
+    // Calculate common symptoms
+    const symptomCount = {};
+    logs.forEach(log => {
+      if (log.symptoms) {
+        log.symptoms.forEach(symptom => {
+          symptomCount[symptom] = (symptomCount[symptom] || 0) + 1;
+        });
+      }
+    });
+    const commonSymptoms = Object.entries(symptomCount)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 3)
+      .map(([symptom]) => symptom);
+
+    // Calculate mood trend
+    const moods = logs.filter(l => l.mood).map(l => l.mood);
+    const happyCount = moods.filter(m => ['happy', 'calm'].includes(m)).length;
+    const sadCount = moods.filter(m => ['sad', 'anxious', 'irritable'].includes(m)).length;
+    const moodTrend = happyCount > sadCount ? 'positive' : sadCount > happyCount ? 'needs-attention' : 'neutral';
+
+    // Generate suggestion
+    let suggestion = '';
+    if (commonSymptoms.includes('cramps')) {
+      suggestion = 'You often experience cramps. Try gentle exercise, heat therapy, or magnesium supplements.';
+    } else if (moodTrend === 'needs-attention') {
+      suggestion = 'Your mood patterns show some challenges. Consider stress management techniques or talking to someone.';
+    } else {
+      suggestion = 'Your cycle patterns look healthy! Keep tracking to maintain awareness.';
+    }
+
+    // Health score (simple calculation)
+    const cycleHealth = Math.min(100, Math.max(50, 85 - (symptomCount['cramps'] || 0) * 5));
+
+    return {
+      cycleHealth,
+      avgCycle: settings.cycleLength,
+      avgPeriod: settings.periodLength,
+      commonSymptoms: commonSymptoms.length > 0 ? commonSymptoms : ['None yet'],
+      moodTrend,
+      suggestion,
+      highlights: [
+        {
+          title: 'Cycle Regularity',
+          description: `Your cycle has been tracked for ${logs.length} days. Keep it up!`,
+          color: 'bg-pink-50'
+        },
+        {
+          title: 'Most Common Symptom',
+          description: commonSymptoms[0] ? `You typically experience ${commonSymptoms[0]}` : 'No symptoms logged yet',
+          color: 'bg-purple-50'
+        },
+        {
+          title: 'Mood Pattern',
+          description: moodTrend === 'positive' ? 'Your mood is generally positive!' : 'Track your mood to see patterns',
+          color: 'bg-blue-50'
+        }
+      ]
+    };
+  };
+
+  if (!cycleSettings || !insights) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <p className="text-gray-600">Calculating your insights...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
