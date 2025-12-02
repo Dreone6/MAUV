@@ -145,11 +145,11 @@ const InsightsPage = () => {
             <CardContent>
               <div className="text-center mb-4">
                 <div className="text-5xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent mb-2">
-                  85%
+                  {insights.cycleHealth}%
                 </div>
-                <p className="text-sm text-gray-600">Your cycle is regular and healthy</p>
+                <p className="text-sm text-gray-600">{insights.suggestion}</p>
               </div>
-              <Progress value={85} className="h-3" />
+              <Progress value={insights.cycleHealth} className="h-3" />
             </CardContent>
           </Card>
 
