@@ -1,0 +1,178 @@
+<analysis>**original_problem_statement:**
+The user initially requested a clone of the Flo menstrual tracker app. The project then evolved significantly based on user feedback.
+
+The final set of requirements is to build the **MAUV Personal Tracker app**, a privacy-first, local-first MVP. The core directives are:
+1.  **Anonymous Identity**: The app must use an anonymous alias and a fairy avatar system for user identity. No real names or personal information should be collected.
+2.  **Fairy Avatar System**: Implement a system with 12 pre-designed, culturally diverse fairy avatars. These presets must be fully reproducible through a modular customization system (skin tone, hair, wings, accessories, etc.).
+3.  **Local-First Data**: All user data (profile, cycle logs, symptoms) must be stored locally in the browser's IndexedDB. There should be no cloud storage by default.
+4.  **Privacy Controls**: Implement Export Data (to a local JSON file) and Delete Data (a complete wipe of local data) functionalities.
+5.  **AMARA AI Companion**: Integrate the AMARA AI (using Claude) as a supportive, bestie-style wellness companion. It should use summarized, anonymized context and include a medical disclaimer.
+6.  **Use User's Figma Designs**: The user has provided their own complete UI designs in Figma, which include code export functionality. The primary directive is to **STOP** generating any new UI and instead **implement the user's exact Figma designs AS-IS**. The agent's only task regarding the UI is to wire the user's code to the existing data layer and backend.
+7.  **iOS App**: Convert the final web application into an iOS app using Capacitor.
+
+**User's preferred language**: English
+
+**what currently exists?**
+A functional full-stack application with a React frontend and FastAPI backend. The application is built around a local-first architecture, with all user data persisting in the browser's IndexedDB via a centralized .
+
+Key completed features include:
+- A video splash screen on first launch.
+- A 2-step anonymous onboarding flow (alias and cycle info).
+- A robust data layer () managing 5 IndexedDB stores for profile, settings, logs, and chats.
+- Core pages (Home, Calendar, Insights, Profile) are wired to the IndexedDB data service, replacing all mock data.
+- Fully functional Export to JSON and Delete All Data features.
+- An integrated AMARA AI chat companion using Claude, complete with a disclaimer.
+- The project has been configured with Capacitor to enable conversion to an iOS app, and an  has been created for cloud-based builds.
+- The current UI is a temporary placeholder, awaiting replacement with the user's Figma designs.
+
+**Last working item**:
+- Last item agent was working: The agent was attempting to access and analyze the user's Figma designs to begin the UI integration process. The user provided a link (), but it is a published website that requires authentication, not a shareable Figma project link with developer access.
+- Status: **BLOCKED**
+- Agent Testing Done: N/A
+- Which testing method agent to use? NA(if testing is already done)
+- User Testing Done: N/A
+
+**All Pending/In progress Issue list**:
+-   **Issue 1: Blocked on Figma Access (Priority: P0)**
+    -   **Description**: The agent cannot proceed with the primary task of integrating the user's UI because the provided Figma link is inaccessible for development purposes. The project is at a standstill until a valid, shareable Figma link with Dev Mode or View access is provided.
+    -   **Attempted fixes**: The agent identified the link was a published site and has requested a proper shareable link from the user, explaining the need for developer access.
+    -   **Next debug checklist**:
+        1.  Receive a new Figma link from the user.
+        2.  Verify the new link provides access to the Figma project files and Dev Mode for code export.
+        3.  If access is successful, begin the screen audit and mapping process as planned.
+    -   **Why fix this issue and what will be achieved with the fix?**: This is the main blocker for all future UI work. Fixing this will allow the agent to replace the placeholder UI with the user's final, pixel-perfect designs, which is the user's highest priority.
+    -   **Status**: BLOCKED
+    -   **Is recurring issue?** Y
+    -   **Should Test frontend/backend/both after fix?** frontend
+    -   **Blocked on other issue**: None. This is the root blocker.
+
+**In progress Task List**:
+-   **Task 1: Integrate User's Figma Designs into the App (Priority: P0)**
+    -   **Description**: Replace the entire existing frontend UI with the user's designs from Figma. This involves copying the exported code for each screen (57+ screens mentioned by the user) and wiring it up to the existing, functional  and backend APIs. The styling and structure from Figma must be preserved exactly.
+    -   **Where to resume**: The task is paused at the very beginning. The next step is to obtain a valid Figma link, then begin auditing and mapping the screens as per the user's instruction (Dashboard first, then onboarding).
+    -   **What will be achieved with this?**: The app will have the user's finalized, pixel-perfect UI, fulfilling the most critical requirement.
+    -   **Status**: NOT STARTED
+    -   **Should Test frontend/backend/both after fix?** frontend
+    -   **Blocked on something**: **Issue 1: Blocked on Figma Access**
+
+**Upcoming and Future Tasks**
+-   **Upcoming Tasks:**
+    1.  **(P0)** **Organize Figma Screens**: Once access is granted, work with the user to organize the 57+ screens into a logical flow (Onboarding, Dashboard, etc.).
+    2.  **(P1)** **Complete Fairy Avatar Customizer**: Implement the full UI for the fairy avatar customization system based on the user's Figma design. This component should be placed on the main dashboard.
+    3.  **(P1)** **Build and Test iOS App**: After the Figma UI is integrated, use a cloud build service (like EAS Build) as outlined in  to create the first iOS build for testing on TestFlight.
+
+-   **Future Tasks:**
+    1.  **(P2)** **Implement Biometric Authentication**: Use Capacitor plugins to add Face ID/Touch ID for the iOS app.
+    2.  **(P2)** **Integrate Email Export Service**: Wire up the backend  route to a service like SendGrid or AWS SES to allow emailing data exports.
+    3.  **(P3)** **Enhance AMARA AI Context**: Implement logic to send summarized, anonymized data (e.g., current cycle phase) to the AMARA AI to provide more contextual responses.
+    4.  **(P3)** **Add Past Cycle History UI**: Create a view for users to browse their historical cycle data.
+
+**Completed work in this session**
+- **Local-First Data Architecture**:
+  - Implemented a complete local data persistence system using IndexedDB via .
+  - Wired all major components (Home, Calendar, Insights, Profile, Symptom Tracker) to use real data from IndexedDB, removing all mock data.
+- **Privacy & Anonymity Features**:
+  - Created a 2-step anonymous onboarding flow (alias + cycle info).
+  - Implemented fully functional Export Data (to JSON) and Delete All Data (full wipe) features.
+- **AI & UI Features**:
+  - Integrated AMARA AI (Claude) with a functional backend endpoint and frontend chat interface, including a medical disclaimer.
+  - Implemented a video splash screen based on user-provided assets.
+  - Created a JSON data file () for the 12 culturally diverse fairy avatars.
+- **iOS Conversion Setup**:
+  - Installed and configured Capacitor for iOS, generating the native Xcode project structure.
+  - Created a detailed guide () for building the iOS app using cloud services.
+- **Documentation**:
+  - Authored comprehensive documentation on the data layer, privacy, identity system, and iOS build process.
+
+**Earlier issues found/mentioned but not fixed**
+-   **Issue 1: Incomplete Fairy Avatar Customizer UI**
+    -   The component  was started but is incomplete.
+    -   **Reason not fixed**: The user pivoted to a new requirement: to use their own pre-built Figma designs for everything. This task is now superseded and should be implemented based on the user's Figma design for the avatar customizer.
+    -   **Status**: Superseded by the Integrate Figma Designs task.
+
+**Known issue recurrence from previous fork**
+-   There are no recurring issues from a previous fork mentioned in the history.
+
+**Code Architecture**
+
+
+**Key Technical Concepts**
+-   **Local-First Architecture**: The application prioritizes storing user data on the client-side using **IndexedDB**, ensuring privacy and offline capabilities.
+-   **React Frontend**: Built with React, using Hooks for state management and functional components.
+-   **FastAPI Backend**: A Python-based backend used primarily for serving the AI chat functionality.
+-   **Capacitor**: A tool used to wrap the web application into a native iOS container.
+-   **AI Integration**: Utilizes the  library to connect to the Claude AI model via the Emergent LLM Key.
+
+**key DB schema**
+The application uses **IndexedDB** on the frontend, not a server-side database for user data.
+-   **Database Name**: 
+-   **Object Stores**:
+    -   : 
+    -   : 
+    -   : (keyed by date ) 
+    -   : 
+    -   : 
+
+**changes in tech stack**
+- The project is configured to be ported to iOS using **Capacitor**.
+
+**All files of reference**
+-   : The heart of the local data layer, containing all IndexedDB logic.
+-   : Handles the initial user setup for alias and cycle info.
+-   : Displays the user-provided intro video.
+-   : Contains the structured data for the 12 fairy avatar presets.
+-   : The FastAPI route that handles communication with the AMARA (Claude) AI.
+-   : Critical documentation for the user to build the iOS app without a Mac.
+-   : Explains the app's privacy model, data storage, and export/delete functions.
+
+**Areas that need refactoring**:
+- The entire UI in  and  is temporary and will be replaced by the user's Figma designs. It does not need refactoring, but deletion and replacement.
+
+**key api endpoints**
+-   : The primary backend endpoint, used for communicating with the AMARA AI companion.
+
+**Critical Info for New Agent**
+-   **STOP ALL UI DESIGN/GENERATION**: Your primary directive is to use the user's Figma designs as the single source of truth. You must not create or modify UI components unless you are converting them from the user's Figma.
+-   **BLOCKED ON FIGMA ACCESS**: You cannot proceed until the user provides a valid, shareable Figma project link with developer access. The last link provided was a published site and is not usable.
+-   **INTEGRATE, DON'T REBUILD**: The backend logic and frontend data layer () are complete and functional. Your task is to wire the user's UI code (from Figma) to this existing infrastructure. Do not change the data service logic.
+-   **HYBRID WORKFLOW**: The user is open to a hybrid workflow using Cursor AI. The recommended approach is for you (the agent) to perform the bulk integration of Figma code, while the user uses Cursor for fine-tuning and review.
+
+**documents created in this job**
+-   
+-   
+-   
+-   
+-   
+-   
+
+**Last 10 User Messages and any pending user messages**
+1.  **User**: States they want to integrate their existing Figma/Stitch screens, treating them as the single source of truth. (Task: Acknowledged, waiting for links)
+2.  **User**: Asks if they can send the splash screen intro video. (Task: Implemented)
+3.  **User**: Sends the splash screen video. (Task: Implemented)
+4.  **User**: Sends the main dashboard as a zip file. (Task: Attempted integration, failed due to TS/JS mismatch, reverted)
+5.  **User**: Reports that the dashboard integration is all wrong. (Task: Acknowledged, investigated, and reverted)
+6.  **User**: Sends a screenshot of the error. (Task: Acknowledged, used to debug and revert)
+7.  **User**: I need this app for IOS. (Task: Capacitor setup completed)
+8.  **User**: Confirms to proceed with iOS conversion and notes they don't have a Mac. (Task: Completed Capacitor setup and provided cloud build guide)
+9.  **User**: Asks for an outline of everything done so far. (Task: Provided a detailed summary)
+10. **User**: Shares a Figma link and asks for help organizing the 57+ screens, noting there may be bugs. (Task: Attempted to access link, failed due to authentication. Currently blocked.)
+
+**Project Health Check:**
+-   **Healthy**: Backend logic, AI integration,  (IndexedDB layer).
+-   **Broken/Placeholder**: The entire frontend UI is considered a placeholder and needs to be replaced with the user's Figma designs.
+-   **Mocked**: No features are currently mocked; all mock data has been replaced with the IndexedDB implementation.
+
+**3rd Party Integrations**
+-   **Anthropic Claude 3.7 Sonnet** — uses Emergent LLM Key (via  library).
+
+**Testing status**
+-   Testing agent used after significant changes: NO
+-   Troubleshoot agent used after agent stuck in loop: NO
+-   Test files created: None.
+-   Known regressions: The attempt to integrate the user's TypeScript dashboard failed and had to be reverted. This highlighted the incompatibility of the current project setup with TypeScript.
+
+**Credentials to test flow:**
+N/A (The app uses an anonymous, local-only identity system).
+
+**What agent forgot to execute**
+The agent is currently blocked and has not forgotten to execute any tasks. It correctly paused UI development as instructed by the user and is waiting for the required Figma project link to proceed with the next critical phase of development.</analysis>
