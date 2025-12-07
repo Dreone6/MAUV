@@ -24,8 +24,8 @@ import {
   Sparkles,
   MessageCircle
 } from 'lucide-react@0.487.0';
-import { FloatingBackground } from './FloatingBackground';
-import { BottomNav } from './BottomNav';
+import { FloatingBackground } from './shared/FloatingBackground';
+import { BottomNav } from './shared/BottomNav';
 
 interface PartnerSharingSettingsProps {
   onBack: () => void;

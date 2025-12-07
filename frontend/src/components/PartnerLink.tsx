@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { LayoutDashboard, Calendar, MessageCircle, Users, Link2, Copy, Share2, Heart, Settings } from 'lucide-react@0.487.0';
-import { BottomNav } from './BottomNav';
+import { BottomNav } from './shared/BottomNav';
 
 interface PartnerLinkProps {
   onBack: () => void;
