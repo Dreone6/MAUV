@@ -264,7 +264,7 @@ export default function App() {
         return <UnderstandingFertileWindowScreen onNext={() => setCurrentView('how-mauv-helps-fertility')} />;
       
       case 'how-mauv-helps-fertility':
-        return <HowMauvHelpsFertilityScreen onNext={() => setCurrentView('ovulation-goal')} onSkip={() => setCurrentView('ovulation-goal')} />;
+        return <HowMAUVHelpsFertilityScreen onNext={() => setCurrentView('ovulation-goal')} onSkip={() => setCurrentView('ovulation-goal')} />;
       
       // === PHASE 10: FERTILITY TRACKING SETUP ===
       case 'ovulation-goal':
