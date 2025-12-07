@@ -1,74 +1,140 @@
-import { CreateAvatarScreen } from './components/onboarding/CreateAvatarScreen';
-import { AvatarSelectionScreen } from './components/onboarding/AvatarSelectionScreen';
-import { CustomizeFairyScreen } from './components/onboarding/CustomizeFairyScreen';
-import { DeviceIntegrationsScreen } from './components/onboarding/DeviceIntegrationsScreen';
-import { AppleHealthPermissionsScreen } from './components/onboarding/AppleHealthPermissionsScreen';
-import { TermsOfServiceScreen } from './components/legal/TermsOfServiceScreen';
-import { PrivacyPolicyScreen } from './components/legal/PrivacyPolicyScreen';
-import { ScreenBoard } from './components/ScreenBoard';
-import { FloatingSymbolsBackground } from './components/FloatingSymbolsBackground';
-import { AppleHealthPermissionsDetailScreen } from './components/onboarding/AppleHealthPermissionsDetailScreen';
+// === REACT ===
 import { useState } from 'react';
-import { SplashScreen } from './components/onboarding/SplashScreen';
-import { OnboardingScreen } from './components/onboarding/OnboardingScreen';
-import { WelcomeScreen } from './components/onboarding/WelcomeScreen';
-import { TestimonialScreen } from './components/onboarding/TestimonialScreen';
-import { SocialLoginScreen } from './components/onboarding/SocialLoginScreen';
-import { PartnerCodeScreen } from './components/onboarding/PartnerCodeScreen';
-import { CyclePowerScreen } from './components/onboarding/CyclePowerScreen';
-import { PremiumScreen } from './components/onboarding/PremiumScreen';
-import { SupportFeaturesScreen } from './components/onboarding/SupportFeaturesScreen';
-import { TrackingSmarterScreen } from './components/onboarding/TrackingSmarterScreen';
-import { SymptomPatternsScreen } from './components/onboarding/SymptomPatternsScreen';
-import { MAUVPlusScreen } from './components/onboarding/MAUVPlusScreen';
-import { UnlockPlusScreen } from './components/onboarding/UnlockPlusScreen';
-import { LinkSmartDeviceScreen } from './components/onboarding/LinkSmartDeviceScreen';
-import { LinkSmartDevicesScreen } from './components/onboarding/LinkSmartDevicesScreen';
-import { PurchaseSuccessScreen } from './components/onboarding/PurchaseSuccessScreen';
-import { ManagePMSScreen } from './components/onboarding/ManagePMSScreen';
-import { SettingUpPlanScreen } from './components/onboarding/SettingUpPlanScreen';
-import { NameInputScreen } from './components/onboarding/NameInputScreen';
-import { BirthdayInputScreen } from './components/onboarding/BirthdayInputScreen';
-import { WelcomeNameScreen } from './components/onboarding/WelcomeNameScreen';
-import { PinpointFertileDaysScreen } from './components/onboarding/PinpointFertileDaysScreen';
-import { FertileWindowExplainScreen } from './components/onboarding/FertileWindowExplainScreen';
-import { OvulationGoalScreen } from './components/onboarding/OvulationGoalScreen';
-import { OvulationKeyScreen } from './components/onboarding/OvulationKeyScreen';
-import { CustomizeRemindersScreen } from './components/onboarding/CustomizeRemindersScreen';
-import { MainGoalScreen } from './components/onboarding/MainGoalScreen';
-import { LHSurgeScreen } from './components/onboarding/LHSurgeScreen';
-import { HormonalRhythmScreen } from './components/onboarding/HormonalRhythmScreen';
-import { HealthConditionsScreen } from './components/onboarding/HealthConditionsScreen';
-import { FertilityChangesDailyScreen } from './components/onboarding/FertilityChangesDailyScreen';
-import { HowMAUVHelpsFertilityScreen } from './components/onboarding/HowMAUVHelpsFertilityScreen';
-import { UnderstandingFertileWindowScreen } from './components/onboarding/UnderstandingFertileWindowScreen';
-import { ImportantInformationScreen } from './components/onboarding/ImportantInformationScreen';
-import { LastPeriodStartScreen } from './components/onboarding/LastPeriodStartScreen';
-import { ConfirmDetailsScreen } from './components/onboarding/ConfirmDetailsScreen';
-import { PeriodFrequencyScreen } from './components/onboarding/PeriodFrequencyScreen';
-import { CongratulationsScreen } from './components/onboarding/CongratulationsScreen';
-import { CycleChangesScreen } from './components/onboarding/CycleChangesScreen';
-import { BirthControlScreen } from './components/onboarding/BirthControlScreen';
-import { TemperatureOvulationScreen } from './components/onboarding/TemperatureOvulationScreen';
-import { UnlockPremiumModal } from './components/UnlockPremiumModal';
-import { NotificationPermissionScreen } from './components/onboarding/NotificationPermissionScreen';
-import { TermsAgreementScreen } from './components/onboarding/TermsAgreementScreen';
-import { IntroduceAmaraScreen } from './components/onboarding/IntroduceAmaraScreen';
-import { DeviceAppIntegrationsScreen } from './components/DeviceAppIntegrationsScreen';
-import { HomeDashboard } from './components/HomeDashboard';
-import { CalendarView } from './components/CalendarView';
-import { SymptomTracker } from './components/SymptomTracker';
-import { HealthInsights } from './components/HealthInsights';
-import { Settings } from './components/Settings';
-import { AmaraAIChat } from './components/AmaraAIChat';
-import { TribalChat } from './components/TribalChat';
-import { PartnerLink } from './components/PartnerLink';
-import { PartnerSettings } from './components/PartnerSettings';
-import { PartnerSharingSettings } from './components/PartnerSharingSettings';
-import { PartnerOnboarding } from './components/PartnerOnboarding';
-import { PartnerDashboard } from './components/PartnerDashboard';
+
+// === TYPES & UTILS ===
 import { HistoricalLogs, CycleData } from './types';
 import { formatDate } from './utils/healthAnalytics';
+
+// === AUTH SCREENS ===
+import { SocialLoginScreen } from './components/auth/SocialLoginScreen';
+import { EmailSignInScreen } from './components/auth/EmailSignInScreen';
+import { EmailSignupScreen } from './components/auth/EmailSignupScreen';
+import { ForgotPasswordScreen } from './components/auth/ForgotPasswordScreen';
+import { ResetPasswordScreen } from './components/auth/ResetPasswordScreen';
+import { OTPVerificationScreen } from './components/auth/OTPVerificationScreen';
+import { PasswordUpdatedSuccessScreen } from './components/auth/PasswordUpdatedSuccessScreen';
+
+// === ONBOARDING: WELCOME ===
+import { SplashScreen } from './components/onboarding/welcome/SplashScreen';
+import { OnboardingScreen } from './components/onboarding/welcome/OnboardingScreen';
+import { WelcomeScreen } from './components/onboarding/welcome/WelcomeScreen';
+import { TestimonialScreen } from './components/onboarding/welcome/TestimonialScreen';
+
+// === ONBOARDING: PROFILE SETUP ===
+import { NameInputScreen } from './components/onboarding/profile/NameInputScreen';
+import { BirthdayInputScreen } from './components/onboarding/profile/BirthdayInputScreen';
+import { WelcomeNameScreen } from './components/onboarding/profile/WelcomeNameScreen';
+import { ConfirmDetailsScreen } from './components/onboarding/profile/ConfirmDetailsScreen';
+import { TermsAgreementScreen } from './components/onboarding/profile/TermsAgreementScreen';
+
+// === ONBOARDING: HEALTH SETUP ===
+import { MainGoalScreen } from './components/onboarding/health-setup/MainGoalScreen';
+import { HealthConditionsScreen } from './components/onboarding/health-setup/HealthConditionsScreen';
+import { BirthControlScreen } from './components/onboarding/health-setup/BirthControlScreen';
+
+// === ONBOARDING: CYCLE SETUP ===
+import { LastPeriodStartScreen } from './components/onboarding/cycle-setup/LastPeriodStartScreen';
+import { PeriodFrequencyScreen } from './components/onboarding/cycle-setup/PeriodFrequencyScreen';
+import { CycleChangesScreen } from './components/onboarding/cycle-setup/CycleChangesScreen';
+import { SettingUpPlanScreen } from './components/onboarding/cycle-setup/SettingUpPlanScreen';
+import { ImportantInformationScreen } from './components/onboarding/cycle-setup/ImportantInformationScreen';
+
+// === ONBOARDING: EDUCATION ===
+import { CyclePowerScreen } from './components/onboarding/education/CyclePowerScreen';
+import { SupportFeaturesScreen } from './components/onboarding/education/SupportFeaturesScreen';
+import { TrackingSmarterScreen } from './components/onboarding/education/TrackingSmarterScreen';
+import { SymptomPatternsScreen } from './components/onboarding/education/SymptomPatternsScreen';
+import { HormonalRhythmScreen } from './components/onboarding/education/HormonalRhythmScreen';
+import { LHSurgeScreen } from './components/onboarding/education/LHSurgeScreen';
+import { TemperatureOvulationScreen } from './components/onboarding/education/TemperatureOvulationScreen';
+import { FertilityChangesDailyScreen } from './components/onboarding/education/FertilityChangesDailyScreen';
+import { UnderstandingFertileWindowScreen } from './components/onboarding/education/UnderstandingFertileWindowScreen';
+import { HowMAUVHelpsFertilityScreen } from './components/onboarding/education/HowMAUVHelpsFertilityScreen';
+import { OvulationGoalScreen } from './components/onboarding/education/OvulationGoalScreen';
+import { OvulationKeyScreen } from './components/onboarding/education/OvulationKeyScreen';
+import { PinpointFertileDaysScreen } from './components/onboarding/education/PinpointFertileDaysScreen';
+import { FertileWindowExplainScreen } from './components/onboarding/education/FertileWindowExplainScreen';
+import { ManagePMSScreen } from './components/onboarding/education/ManagePMSScreen';
+
+// === ONBOARDING: PERSONALIZATION ===
+import { IntroduceAmaraScreen } from './components/onboarding/personalization/IntroduceAmaraScreen';
+import { CreateAvatarScreen } from './components/onboarding/personalization/CreateAvatarScreen';
+import { AvatarSelectionScreen } from './components/onboarding/personalization/AvatarSelectionScreen';
+import { CustomizeFairyScreen } from './components/onboarding/personalization/CustomizeFairyScreen';
+import { CustomizeRemindersScreen } from './components/onboarding/personalization/CustomizeRemindersScreen';
+
+// === ONBOARDING: DEVICES ===
+import { NotificationPermissionScreen } from './components/onboarding/devices/NotificationPermissionScreen';
+import { DeviceIntegrationsScreen } from './components/onboarding/devices/DeviceIntegrationsScreen';
+import { AppleHealthPermissionsScreen } from './components/onboarding/devices/AppleHealthPermissionsScreen';
+import { AppleHealthPermissionsDetailScreen } from './components/onboarding/devices/AppleHealthPermissionsDetailScreen';
+import { LinkSmartDeviceScreen } from './components/onboarding/devices/LinkSmartDeviceScreen';
+import { LinkSmartDevicesScreen } from './components/onboarding/devices/LinkSmartDevicesScreen';
+import { DeviceAppIntegrationsScreen } from './components/onboarding/devices/DeviceAppIntegrationsScreen';
+
+// === ONBOARDING: PREMIUM ===
+import { PremiumScreen } from './components/onboarding/premium/PremiumScreen';
+import { MAUVPlusScreen } from './components/onboarding/premium/MAUVPlusScreen';
+import { UnlockPlusScreen } from './components/onboarding/premium/UnlockPlusScreen';
+import { UnlockPremiumModal } from './components/onboarding/premium/UnlockPremiumModal';
+import { PurchaseSuccessScreen } from './components/onboarding/premium/PurchaseSuccessScreen';
+
+// === ONBOARDING: COMPLETION ===
+import { CongratulationsScreen } from './components/onboarding/completion/CongratulationsScreen';
+import { PartnerCodeScreen } from './components/onboarding/completion/PartnerCodeScreen';
+
+// === MAIN APP: DASHBOARD ===
+import { HomeDashboard } from './components/dashboard/HomeDashboard';
+import { HomeDashboardDark } from './components/dashboard/HomeDashboardDark';
+import { RearrangeableHomeDashboard } from './components/dashboard/RearrangeableHomeDashboard';
+
+// === MAIN APP: CALENDAR ===
+import { CalendarView } from './components/calendar/CalendarView';
+import { CalendarViewDark } from './components/calendar/CalendarViewDark';
+import { CyclePhaseRing } from './components/calendar/CyclePhaseRing';
+
+// === MAIN APP: TRACKING ===
+import { SymptomTracker } from './components/tracking/SymptomTracker';
+import { LogModal } from './components/tracking/LogModal';
+
+// === MAIN APP: HEALTH ===
+import { HealthInsights } from './components/health/HealthInsights';
+
+// === MAIN APP: CHAT ===
+import { AmaraAIChat } from './components/chat/AmaraAIChat';
+import { AmaraAIChatDark } from './components/chat/AmaraAIChatDark';
+import { TribalChat } from './components/chat/TribalChat';
+import { TribalChatDark } from './components/chat/TribalChatDark';
+
+// === PARTNER SCREENS ===
+import { PartnerLink } from './components/partner/PartnerLink';
+import { PartnerLinkDark } from './components/partner/PartnerLinkDark';
+import { PartnerSettings } from './components/partner/PartnerSettings';
+import { PartnerSharingSettings } from './components/partner/PartnerSharingSettings';
+import { PartnerSharingSettingsDark } from './components/partner/PartnerSharingSettingsDark';
+import { PartnerOnboarding } from './components/partner/PartnerOnboarding';
+import { PartnerDashboard } from './components/partner/PartnerDashboard';
+
+// === SETTINGS ===
+import { Settings } from './components/Settings';
+import { SettingsScreen } from './components/SettingsScreen';
+import { SettingsScreenDark } from './components/SettingsScreenDark';
+
+// === LEGAL ===
+import { TermsOfServiceScreen } from './components/legal/TermsOfServiceScreen';
+import { PrivacyPolicyScreen } from './components/legal/PrivacyPolicyScreen';
+
+// === SHARED COMPONENTS ===
+import { ScreenBoard } from './components/shared/ScreenBoard';
+import { FloatingSymbolsBackground } from './components/shared/FloatingSymbolsBackground';
+import { FloatingBackground } from './components/shared/FloatingBackground';
+import { BottomNav } from './components/shared/BottomNav';
+import { AmaraNavButton } from './components/shared/AmaraNavButton';
+import { AmaraAvatar } from './components/shared/AmaraAvatar';
+import { CircularProgress } from './components/shared/CircularProgress';
+import { FeatureCard } from './components/shared/FeatureCard';
+import { OnboardingSlide } from './components/shared/OnboardingSlide';
+import { NotificationSettingsModal } from './components/shared/NotificationSettingsModal';
 
 export type ScreenType = 'board' | 'splash' | 'onboarding' | 'device-integrations' | 'apple-health' | 'cycle-power' | 'premium' | 'social-login' | 'welcome' | 'testimonial' | 'partner-code' | 'support-features' | 'tracking-smarter' | 'symptom-patterns' | 'mauv-plus' | 'unlock-plus' | 'link-smart-device' | 'link-smart-devices' | 'purchase-success' | 'manage-pms' | 'setting-up-plan' | 'name-input' | 'birthday-input' | 'welcome-name' | 'pinpoint-fertile-days' | 'fertile-window-explain' | 'ovulation-goal' | 'ovulation-key' | 'customize-reminders' | 'main-goal' | 'lh-surge' | 'hormonal-rhythm' | 'health-conditions' | 'fertility-changes-daily' | 'how-mauv-helps-fertility' | 'understanding-fertile-window' | 'important-information' | 'last-period-start' | 'confirm-details' | 'period-frequency' | 'congratulations' | 'cycle-changes' | 'birth-control' | 'temperature-ovulation' | 'unlock-premium-modal' | 'notification-permission' | 'terms-agreement' | 'introduce-amara' | 'create-avatar' | 'avatar-selection' | 'customize-fairy' | 'apple-health-detail' | 'device-app-integrations' | 'home-dashboard' | 'calendar' | 'symptom-tracker' | 'insights' | 'settings' | 'amara-chat' | 'tribal-chat' | 'partner-link' | 'partner-settings' | 'partner-sharing-settings' | 'partner-onboarding' | 'partner-dashboard' | 'terms-of-service' | 'privacy-policy';
 
