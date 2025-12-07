@@ -40,7 +40,7 @@ import { LHSurgeScreen } from './components/onboarding/LHSurgeScreen';
 import { HormonalRhythmScreen } from './components/onboarding/HormonalRhythmScreen';
 import { HealthConditionsScreen } from './components/onboarding/HealthConditionsScreen';
 import { FertilityChangesDailyScreen } from './components/onboarding/FertilityChangesDailyScreen';
-import { HowMauvHelpsFertilityScreen } from './components/onboarding/HowMauvHelpsFertilityScreen';
+import { HowMAUVHelpsFertilityScreen } from './components/onboarding/HowMAUVHelpsFertilityScreen';
 import { UnderstandingFertileWindowScreen } from './components/onboarding/UnderstandingFertileWindowScreen';
 import { ImportantInformationScreen } from './components/onboarding/ImportantInformationScreen';
 import { LastPeriodStartScreen } from './components/onboarding/LastPeriodStartScreen';
