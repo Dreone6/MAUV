@@ -5,6 +5,9 @@
 
   export default defineConfig({
     plugins: [react()],
+    css: {
+      postcss: false,  // Disable PostCSS as we have pre-compiled Tailwind CSS
+    },
     resolve: {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
       alias: {
