@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { LayoutDashboard, Calendar, MessageCircle, Users, Heart, Settings, Gem } from 'lucide-react@0.487.0';
-import { FloatingBackground } from './FloatingBackground';
-import { BottomNav } from './BottomNav';
+import { FloatingBackground } from '../shared/FloatingBackground';
+import { BottomNav } from '../shared/BottomNav';
 
 interface TribalChatProps {
   onBack: () => void;
