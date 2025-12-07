@@ -107,13 +107,13 @@ import { TribalChat } from './components/chat/TribalChat';
 import { TribalChatDark } from './components/chat/TribalChatDark';
 
 // === PARTNER SCREENS ===
-import { PartnerLink } from './components/partner/PartnerLink';
-import { PartnerLinkDark } from './components/partner/PartnerLinkDark';
-import { PartnerSettings } from './components/partner/PartnerSettings';
-import { PartnerSharingSettings } from './components/partner/PartnerSharingSettings';
-import { PartnerSharingSettingsDark } from './components/partner/PartnerSharingSettingsDark';
-import { PartnerOnboarding } from './components/partner/PartnerOnboarding';
-import { PartnerDashboard } from './components/partner/PartnerDashboard';
+import { PartnerLink } from './components/PartnerLink';
+import { PartnerLinkDark } from './components/PartnerLinkDark';
+import { PartnerSettings } from './components/PartnerSettings';
+import { PartnerSharingSettings } from './components/PartnerSharingSettings';
+import { PartnerSharingSettingsDark } from './components/PartnerSharingSettingsDark';
+import { PartnerOnboarding } from './components/PartnerOnboarding';
+import { PartnerDashboard } from './components/PartnerDashboard';
 
 // === SETTINGS ===
 import { Settings } from './components/Settings';
