@@ -1,413 +1,295 @@
+import { useState, useRef } from 'react';
+import { LayoutDashboard, Calendar, MessageCircle, Users, Heart, Settings, Gem } from 'lucide-react@0.487.0';
+import { FloatingBackground } from './FloatingBackground';
+import { BottomNav } from './BottomNav';
 
-import React, { useState } from 'react';
-import { TribalPost, TribalComment } from '../types';
+interface TribalChatProps {
+  onBack: () => void;
+  onNavigate?: (screen: 'calendar' | 'amara-chat' | 'partner-link') => void;
+}
 
-const CATEGORIES = [
-  "All Topics",
-  "Period and Cycle",
-  "Mental Health",
-  "Health & Wellbeing",
-  "Sex Life",
-  "My Body",
-  "Relationships",
-  "Self & Society",
-  "LGBTQ+",
-  "Trying to Conceive",
-  "Pregnancy",
-  "Pregnancy Lost",
-  "Parenting",
-  "Female Health",
-  "Just for Fun"
-];
+interface Post {
+  id: number;
+  category: string;
+  categoryColor: string;
+  timestamp: string;
+  title: string;
+  preview: string;
+  author: string;
+  authorInitial: string;
+  authorColor: string;
+  likes: number;
+  comments: number;
+  isNew?: boolean;
+}
 
-const MOCK_POSTS: TribalPost[] = [
-  {
-    id: '1',
-    title: "Irregular cycle after coming off the pill?",
-    content: "Hi sisters, I stopped taking the pill about 3 months ago and my cycle is still all over the place. Sometimes 25 days, sometimes 40. Is this normal? How long did it take for yours to regulate?",
-    category: "Period and Cycle",
-    author: "Moon Child",
-    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2), // 2 hours ago
-    likes: 12,
-    avatarColor: "bg-purple-200",
-    comments: [
-      { id: 'c1', text: "Totally normal! Took me about 6 months.", author: "Sister_88", timestamp: new Date(), avatarColor: "bg-blue-200" },
-      { id: 'c2', text: "Try seed cycling, it helped me a lot.", author: "Herbalist", timestamp: new Date(), avatarColor: "bg-green-200" }
-    ]
-  },
-  {
-    id: '2',
-    title: "Anxiety spiking during ovulation",
-    content: "Does anyone else get super anxious right around ovulation? I thought PMS was supposed to be the bad time, but I feel like I'm vibrating with anxiety mid-cycle.",
-    category: "Mental Health",
-    author: "AnxiousBee",
-    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24), // 1 day ago
-    likes: 34,
-    avatarColor: "bg-yellow-200",
-    comments: [
-      { id: 'c3', text: "Yes! High estrogen can actually be stimulating for some.", author: "NurseJoy", timestamp: new Date(), avatarColor: "bg-red-200" }
-    ]
-  },
-  {
-    id: '3',
-    title: "Best sustainable period products?",
-    content: "Looking to switch from tampons to something more eco-friendly. Cup vs Disc? Any recommendations for beginners?",
-    category: "Health & Wellbeing",
-    author: "EcoWarrior",
-    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 5),
-    likes: 8,
-    avatarColor: "bg-green-200",
-    comments: []
-  }
-];
+interface Category {
+  id: string;
+  name: string;
+  hasNew: boolean;
+}
 
-const TribalChat: React.FC = () => {
-  const [activeCategory, setActiveCategory] = useState("All Topics");
-  const [posts, setPosts] = useState<TribalPost[]>(MOCK_POSTS);
-  const [selectedPost, setSelectedPost] = useState<TribalPost | null>(null);
-  const [isCreating, setIsCreating] = useState(false);
-  const [categoriesWithNewPosts, setCategoriesWithNewPosts] = useState<Set<string>>(new Set());
+export function TribalChat({ onBack, onNavigate }: TribalChatProps) {
+  const [selectedNav, setSelectedNav] = useState('chat');
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const scrollRef = useRef<HTMLDivElement>(null);
 
-  // New Post Form State
-  const [newTitle, setNewTitle] = useState("");
-  const [newContent, setNewContent] = useState("");
-  const [newCategory, setNewCategory] = useState(CATEGORIES[1]);
+  const categories: Category[] = [
+    { id: 'all', name: 'All Posts', hasNew: true },
+    { id: 'period-cycle', name: 'Period and Cycle', hasNew: true },
+    { id: 'mental-health', name: 'Mental Health', hasNew: false },
+    { id: 'health-wellbeing', name: 'Health & Wellbeing', hasNew: true },
+    { id: 'sex-life', name: 'Sex Life', hasNew: false },
+    { id: 'my-body', name: 'My Body', hasNew: false },
+    { id: 'relationships', name: 'Relationships', hasNew: true },
+    { id: 'self-society', name: 'Self & Society', hasNew: false },
+    { id: 'lgbtq', name: 'LGBTQ+', hasNew: false },
+    { id: 'trying-conceive', name: 'Trying to Conceive', hasNew: true },
+    { id: 'pregnancy', name: 'Pregnancy', hasNew: false },
+    { id: 'pregnancy-loss', name: 'Pregnancy Loss', hasNew: false },
+    { id: 'parenting', name: 'Parenting', hasNew: false },
+    { id: 'female-health', name: 'Female Health', hasNew: true },
+    { id: 'just-fun', name: 'Just for Fun', hasNew: false },
+  ];
 
-  // Comment Form State
-  const [newComment, setNewComment] = useState("");
+  const allPosts: Post[] = [
+    {
+      id: 1,
+      category: 'Period and Cycle',
+      categoryColor: 'text-purple-600',
+      timestamp: '5h ago',
+      title: 'Irregular cycle after coming off the pill?',
+      preview: 'Hi sisters, I stopped taking the pill about 3 months ago and my cycle is still all over the place. Sometimes 25 days, sometimes 40. Is this...',
+      author: 'Moon Child',
+      authorInitial: 'M',
+      authorColor: 'bg-purple-400',
+      likes: 12,
+      comments: 2,
+      isNew: true,
+    },
+    {
+      id: 2,
+      category: 'Mental Health',
+      categoryColor: 'text-pink-600',
+      timestamp: '12/1/2025',
+      title: 'Anxiety spiking during ovulation',
+      preview: 'Does anyone else get super anxious right around ovulation? I thought PMS was supposed to be the bad time, but I feel like I\'m...',
+      author: 'AnxiousBee',
+      authorInitial: 'A',
+      authorColor: 'bg-yellow-400',
+      likes: 34,
+      comments: 1,
+    },
+    {
+      id: 3,
+      category: 'Health & Wellbeing',
+      categoryColor: 'text-green-600',
+      timestamp: '8h ago',
+      title: 'Best sustainable period products?',
+      preview: 'Looking to switch from tampons to something more eco-friendly. Cup vs Disc? Any recommendations for beginners?',
+      author: 'EcoWarrior',
+      authorInitial: 'E',
+      authorColor: 'bg-green-400',
+      likes: 8,
+      comments: 0,
+      isNew: true,
+    },
+    {
+      id: 4,
+      category: 'Relationships',
+      categoryColor: 'text-red-600',
+      timestamp: '2h ago',
+      title: 'How to talk to partner about PMS symptoms?',
+      preview: 'My partner doesn\'t really understand how bad my PMS gets. Any tips on how to communicate this better? I don\'t want to...',
+      author: 'SarahLoves',
+      authorInitial: 'S',
+      authorColor: 'bg-red-400',
+      likes: 22,
+      comments: 5,
+      isNew: true,
+    },
+    {
+      id: 5,
+      category: 'Trying to Conceive',
+      categoryColor: 'text-orange-600',
+      timestamp: '1h ago',
+      title: 'Positive OPK but no temp spike yet?',
+      preview: 'Got my first positive ovulation test yesterday but my BBT hasn\'t risen yet. Is this normal? Should I keep testing?',
+      author: 'BabyHopes',
+      authorInitial: 'B',
+      authorColor: 'bg-orange-400',
+      likes: 15,
+      comments: 3,
+      isNew: true,
+    },
+    {
+      id: 6,
+      category: 'Female Health',
+      categoryColor: 'text-teal-600',
+      timestamp: '3h ago',
+      title: 'Anyone else dealing with PCOS?',
+      preview: 'Just got diagnosed with PCOS and feeling a bit overwhelmed. Would love to hear from others managing this condition...',
+      author: 'WarriorQueen',
+      authorInitial: 'W',
+      authorColor: 'bg-teal-400',
+      likes: 45,
+      comments: 12,
+      isNew: true,
+    },
+  ];
 
-  const filteredPosts = activeCategory === "All Topics" 
-    ? posts 
-    : posts.filter(p => p.category === activeCategory);
+  const filteredPosts = selectedCategory === 'all' 
+    ? allPosts 
+    : allPosts.filter(post => {
+        const categoryMap: Record<string, string> = {
+          'period-cycle': 'Period and Cycle',
+          'mental-health': 'Mental Health',
+          'health-wellbeing': 'Health & Wellbeing',
+          'relationships': 'Relationships',
+          'trying-conceive': 'Trying to Conceive',
+          'female-health': 'Female Health',
+        };
+        return post.category === categoryMap[selectedCategory];
+      });
 
-  const handleCategoryChange = (cat: string) => {
-    setActiveCategory(cat);
-    // Clear the notification when user views the category
-    if (categoriesWithNewPosts.has(cat)) {
-      const next = new Set(categoriesWithNewPosts);
-      next.delete(cat);
-      setCategoriesWithNewPosts(next);
-    }
-  };
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-purple-100">
+      {/* Floating Background */}
+      <FloatingBackground />
+      
+      {/* Header */}
+      <div className="bg-white/80 backdrop-blur-sm border-b border-purple-200/50 sticky top-0 z-20 shadow-sm">
+        <div className="max-w-md mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            {/* User Avatar */}
+            <button className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-white shadow-md">
+              <span>O</span>
+            </button>
 
-  const handleCreatePost = () => {
-    if (!newTitle.trim() || !newContent.trim()) return;
+            {/* Title */}
+            <h1 className="text-center bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+              MAUV Tribal Chat
+            </h1>
 
-    const newPost: TribalPost = {
-      id: Date.now().toString(),
-      title: newTitle,
-      content: newContent,
-      category: newCategory,
-      author: "Anonymous Sister", // Default anonymous name
-      timestamp: new Date(),
-      likes: 0,
-      comments: [],
-      avatarColor: "bg-pink-200" // Randomize in real app
-    };
-
-    setPosts([newPost, ...posts]);
-    
-    // Add "new" indicator to the category
-    setCategoriesWithNewPosts(prev => new Set(prev).add(newCategory));
-
-    setIsCreating(false);
-    setNewTitle("");
-    setNewContent("");
-    setNewCategory(CATEGORIES[1]);
-  };
-
-  const handleAddComment = () => {
-    if (!newComment.trim() || !selectedPost) return;
-
-    const comment: TribalComment = {
-      id: Date.now().toString(),
-      text: newComment,
-      author: "Anonymous",
-      timestamp: new Date(),
-      avatarColor: "bg-indigo-200"
-    };
-
-    const updatedPost = {
-      ...selectedPost,
-      comments: [...selectedPost.comments, comment]
-    };
-
-    // Update in list
-    setPosts(posts.map(p => p.id === selectedPost.id ? updatedPost : p));
-    // Update active view
-    setSelectedPost(updatedPost);
-    setNewComment("");
-  };
-
-  const toggleLike = (postId: string) => {
-    setPosts(posts.map(p => {
-      if (p.id === postId) {
-        return { ...p, likes: p.likes + 1 };
-      }
-      return p;
-    }));
-    if (selectedPost && selectedPost.id === postId) {
-      setSelectedPost(prev => prev ? ({ ...prev, likes: prev.likes + 1 }) : null);
-    }
-  };
-
-  // --- RENDER HELPERS ---
-
-  const formatDate = (date: Date) => {
-    const now = new Date();
-    const diff = now.getTime() - date.getTime();
-    const hours = Math.floor(diff / (1000 * 60 * 60));
-    
-    if (hours < 1) return "Just now";
-    if (hours < 24) return `${hours}h ago`;
-    return date.toLocaleDateString();
-  };
-
-  // --- VIEWS ---
-
-  if (isCreating) {
-    return (
-      <div className="w-full min-h-screen bg-background-light dark:bg-background-dark pb-24 animate-in slide-in-from-bottom duration-300">
-        <header className="p-4 flex items-center justify-between border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-background-dark sticky top-0 z-20">
-          <button onClick={() => setIsCreating(false)} className="text-sm font-medium text-gray-500">Cancel</button>
-          <h2 className="font-bold text-lg">New Post</h2>
-          <button onClick={handleCreatePost} disabled={!newTitle.trim()} className="text-sm font-bold text-primary disabled:opacity-50">Post</button>
-        </header>
-
-        <div className="p-4 space-y-6">
-          <div>
-            <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Topic</label>
-            <select 
-              value={newCategory} 
-              onChange={(e) => setNewCategory(e.target.value)}
-              className="w-full p-3 rounded-xl bg-white dark:bg-gray-800 border-none focus:ring-2 focus:ring-primary text-sm"
-            >
-              {CATEGORIES.filter(c => c !== "All Topics").map(c => (
-                <option key={c} value={c}>{c}</option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Title</label>
-            <input 
-              type="text" 
-              value={newTitle}
-              onChange={(e) => setNewTitle(e.target.value)}
-              placeholder="What's on your mind?"
-              className="w-full p-3 rounded-xl bg-white dark:bg-gray-800 border-none focus:ring-2 focus:ring-primary font-bold text-lg placeholder-gray-300"
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Content</label>
-            <textarea 
-              value={newContent}
-              onChange={(e) => setNewContent(e.target.value)}
-              placeholder="Share your story or ask a question..."
-              className="w-full p-3 rounded-xl bg-white dark:bg-gray-800 border-none focus:ring-2 focus:ring-primary min-h-[200px] text-sm leading-relaxed placeholder-gray-300 resize-none"
-            />
-          </div>
-          
-          <div className="p-4 bg-primary/10 rounded-xl flex gap-3">
-             <span className="material-symbols-outlined text-primary">visibility_off</span>
-             <p className="text-xs text-primary/80">Your post will be anonymous. We'll assign you a random nickname.</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (selectedPost) {
-    return (
-      <div className="w-full min-h-screen bg-background-light dark:bg-background-dark pb-24 animate-in slide-in-from-right duration-300 flex flex-col">
-        <header className="p-4 flex items-center gap-2 border-b border-gray-100 dark:border-gray-800 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-20">
-          <button onClick={() => setSelectedPost(null)} className="p-2 -ml-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
-            <span className="material-symbols-outlined">arrow_back</span>
-          </button>
-          <span className="text-xs font-bold px-2 py-1 rounded-full bg-primary/10 text-primary truncate max-w-[200px]">{selectedPost.category}</span>
-        </header>
-
-        <div className="flex-1 overflow-y-auto">
-          {/* Main Post */}
-          <div className="p-5 bg-white dark:bg-background-dark mb-2">
-            <div className="flex items-center gap-3 mb-4">
-              <div className={`w-10 h-10 rounded-full ${selectedPost.avatarColor} flex items-center justify-center text-gray-700 font-bold text-lg shadow-sm`}>
-                {selectedPost.author.charAt(0)}
-              </div>
-              <div>
-                <p className="font-bold text-sm text-text-light dark:text-text-dark">{selectedPost.author}</p>
-                <p className="text-xs text-gray-400">{formatDate(selectedPost.timestamp)}</p>
-              </div>
-            </div>
-            
-            <h1 className="text-xl font-bold mb-3 text-text-light dark:text-text-dark">{selectedPost.title}</h1>
-            <p className="text-sm leading-relaxed text-text-light/90 dark:text-text-dark/90 mb-4 whitespace-pre-wrap">
-              {selectedPost.content}
-            </p>
-
-            <div className="flex items-center gap-4 text-gray-500 border-t border-gray-100 dark:border-gray-800 pt-3">
-              <button 
-                onClick={() => toggleLike(selectedPost.id)}
-                className="flex items-center gap-1.5 hover:text-accent-coral transition-colors"
-              >
-                <span className="material-symbols-outlined text-xl">favorite</span>
-                <span className="text-sm font-medium">{selectedPost.likes}</span>
-              </button>
-              <div className="flex items-center gap-1.5">
-                <span className="material-symbols-outlined text-xl">chat_bubble</span>
-                <span className="text-sm font-medium">{selectedPost.comments.length}</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Comments Section */}
-          <div className="p-4">
-            <h3 className="text-xs font-bold text-gray-400 uppercase mb-4">Discussion</h3>
-            <div className="space-y-4">
-              {selectedPost.comments.map(comment => (
-                <div key={comment.id} className="flex gap-3 animate-in fade-in slide-in-from-bottom-2">
-                  <div className={`w-8 h-8 rounded-full ${comment.avatarColor} flex-shrink-0 flex items-center justify-center text-xs font-bold shadow-sm text-gray-700`}>
-                    {comment.author.charAt(0)}
-                  </div>
-                  <div className="bg-white dark:bg-gray-800 p-3 rounded-2xl rounded-tl-none shadow-sm flex-1">
-                    <div className="flex justify-between items-center mb-1">
-                      <span className="text-xs font-bold text-gray-600 dark:text-gray-300">{comment.author}</span>
-                      <span className="text-[10px] text-gray-400">{formatDate(comment.timestamp)}</span>
-                    </div>
-                    <p className="text-sm text-text-light dark:text-text-dark">{comment.text}</p>
-                  </div>
-                </div>
-              ))}
-              {selectedPost.comments.length === 0 && (
-                <div className="text-center py-8 text-gray-400">
-                  <p className="text-sm">No comments yet. Be the first to support!</p>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Comment Input */}
-        <div className="p-4 bg-white dark:bg-background-dark border-t border-gray-100 dark:border-gray-800 sticky bottom-0 z-20">
-          <div className="flex gap-2">
-            <input 
-              type="text" 
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-              placeholder="Add a supportive comment..."
-              className="flex-1 bg-background-light dark:bg-gray-900 border-none rounded-full px-4 text-sm focus:ring-2 focus:ring-primary"
-              onKeyDown={(e) => e.key === 'Enter' && handleAddComment()}
-            />
+            {/* Settings Button */}
             <button 
-              onClick={handleAddComment}
-              disabled={!newComment.trim()}
-              className="p-2 rounded-full bg-primary text-white disabled:opacity-50 disabled:bg-gray-300"
+              className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors shadow-sm"
             >
-              <span className="material-symbols-outlined text-xl">send</span>
+              <Settings className="w-5 h-5 text-gray-600" />
             </button>
           </div>
         </div>
-      </div>
-    );
-  }
 
-  // DEFAULT FEED VIEW
-  return (
-    <div className="w-full min-h-screen bg-background-light dark:bg-background-dark pb-28 animate-in fade-in duration-500">
-      
-      {/* Header */}
-      <header className="p-4 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-20 border-b border-gray-100 dark:border-gray-800">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h1 className="text-2xl font-bold text-text-light dark:text-text-dark">Tribal Chat</h1>
-            <p className="text-xs text-gray-500 dark:text-gray-400">Safe, anonymous community support</p>
-          </div>
-          <button 
-            onClick={() => setIsCreating(true)}
-            className="flex items-center gap-1 bg-primary text-white px-3 py-1.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 active:scale-95 transition-transform"
+        {/* Category Slider */}
+        <div className="max-w-md mx-auto px-6 pb-3">
+          <div 
+            ref={scrollRef}
+            className="flex gap-2 overflow-x-auto scrollbar-hide pb-2"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
-            <span className="material-symbols-outlined text-lg">add</span>
-            New Post
-          </button>
-        </div>
-
-        {/* Categories Horizontal Scroll */}
-        <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-          {CATEGORIES.map(cat => {
-            const isNew = categoriesWithNewPosts.has(cat);
-            return (
+            {categories.map((category) => (
               <button
-                key={cat}
-                onClick={() => handleCategoryChange(cat)}
-                className={`whitespace-nowrap px-4 py-1.5 rounded-full text-xs font-bold transition-all relative ${
-                  activeCategory === cat 
-                    ? 'bg-text-light dark:bg-white text-white dark:text-text-light shadow-md' 
-                    : 'bg-gray-100 dark:bg-gray-800 text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700'
+                key={category.id}
+                onClick={() => setSelectedCategory(category.id)}
+                className={`relative flex-shrink-0 px-4 py-2 rounded-full text-sm transition-all duration-200 ${
+                  selectedCategory === category.id
+                    ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-md'
+                    : 'bg-white/70 text-gray-700 hover:bg-white shadow-sm'
                 }`}
               >
-                {cat}
-                {isNew && activeCategory !== cat && (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[8px] font-bold px-1.5 py-0.5 rounded-full shadow-sm animate-pulse border-2 border-background-light dark:border-background-dark">
-                    NEW
-                  </span>
+                <span className="whitespace-nowrap">{category.name}</span>
+                {category.hasNew && (
+                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center shadow-md">
+                    <Gem className="w-2.5 h-2.5 text-white" />
+                  </div>
                 )}
               </button>
-            );
-          })}
-        </div>
-      </header>
-
-      {/* Feed */}
-      <div className="p-4 space-y-4">
-        {filteredPosts.map(post => (
-          <div 
-            key={post.id} 
-            onClick={() => setSelectedPost(post)}
-            className="bg-white dark:bg-background-dark p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-md transition-shadow cursor-pointer active:scale-[0.99] transition-transform"
-          >
-            <div className="flex items-start justify-between mb-2">
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-secondary-lavender/20 text-purple-600 truncate max-w-[150px]">
-                {post.category}
-              </span>
-              <span className="text-[10px] text-gray-400">{formatDate(post.timestamp)}</span>
-            </div>
-            
-            <h3 className="font-bold text-text-light dark:text-text-dark mb-1 leading-tight">{post.title}</h3>
-            <p className="text-xs text-text-light/70 dark:text-text-dark/70 line-clamp-2 mb-3">
-              {post.content}
-            </p>
-
-            <div className="flex items-center justify-between pt-2 border-t border-gray-50 dark:border-gray-800">
-               <div className="flex items-center gap-2">
-                  <div className={`w-5 h-5 rounded-full ${post.avatarColor} flex items-center justify-center text-[10px] font-bold text-gray-700`}>
-                    {post.author.charAt(0)}
-                  </div>
-                  <span className="text-xs text-gray-500 font-medium">{post.author}</span>
-               </div>
-               
-               <div className="flex items-center gap-3 text-gray-400">
-                  <span className="flex items-center gap-1 text-xs">
-                    <span className="material-symbols-outlined text-base">favorite</span> {post.likes}
-                  </span>
-                  <span className="flex items-center gap-1 text-xs">
-                    <span className="material-symbols-outlined text-base">chat_bubble</span> {post.comments.length}
-                  </span>
-               </div>
-            </div>
+            ))}
           </div>
-        ))}
+        </div>
+      </div>
 
+      <div className="max-w-md mx-auto px-6 py-6 pb-24">
+        {/* Posts Count */}
+        <div className="mb-4">
+          <p className="text-sm text-gray-600">
+            {filteredPosts.length} {filteredPosts.length === 1 ? 'post' : 'posts'}
+          </p>
+        </div>
+
+        {/* Posts List */}
+        <div className="space-y-4">
+          {filteredPosts.map((post) => (
+            <button
+              key={post.id}
+              className="relative w-full bg-white/90 rounded-3xl p-6 shadow-md hover:shadow-lg transition-all duration-200 text-left border border-purple-100/50"
+            >
+              {/* New Post Badge */}
+              {post.isNew && (
+                <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center shadow-lg animate-pulse">
+                  <Gem className="w-4 h-4 text-white" />
+                </div>
+              )}
+
+              {/* Category and Timestamp */}
+              <div className="flex items-center justify-between mb-3">
+                <span className={`text-sm ${post.categoryColor}`}>
+                  {post.category}
+                </span>
+                <span className="text-xs text-gray-400">{post.timestamp}</span>
+              </div>
+
+              {/* Title */}
+              <h3 className="text-gray-900 mb-2">{post.title}</h3>
+
+              {/* Preview Text */}
+              <p className="text-sm text-gray-600 mb-4 line-clamp-2 leading-relaxed">
+                {post.preview}
+              </p>
+
+              {/* Author and Engagement */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className={`w-6 h-6 rounded-full ${post.authorColor} flex items-center justify-center text-white text-xs shadow-sm`}>
+                    {post.authorInitial}
+                  </div>
+                  <span className="text-sm text-gray-700">{post.author}</span>
+                </div>
+
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-1">
+                    <Heart className="w-4 h-4 text-gray-400" />
+                    <span className="text-sm text-gray-500">{post.likes}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <MessageCircle className="w-4 h-4 text-gray-400" />
+                    <span className="text-sm text-gray-500">{post.comments}</span>
+                  </div>
+                </div>
+              </div>
+            </button>
+          ))}
+        </div>
+
+        {/* Empty State */}
         {filteredPosts.length === 0 && (
-          <div className="text-center py-12 opacity-50">
-            <span className="material-symbols-outlined text-4xl mb-2">forum</span>
-            <p className="text-sm font-medium">No posts in this topic yet.</p>
-            <p className="text-xs">Be the first to start a discussion!</p>
+          <div className="text-center py-12">
+            <div className="w-16 h-16 rounded-full bg-purple-100 flex items-center justify-center mx-auto mb-4">
+              <MessageCircle className="w-8 h-8 text-purple-400" />
+            </div>
+            <h3 className="text-gray-800 mb-2">No posts yet</h3>
+            <p className="text-sm text-gray-600">
+              Be the first to start a conversation in this category!
+            </p>
           </div>
         )}
       </div>
+
+      {/* Bottom Navigation */}
+      <BottomNav
+        onNavigate={onNavigate || (() => {})}
+        currentScreen="tribal-chat"
+      />
     </div>
   );
-};
-
-export default TribalChat;
+}
