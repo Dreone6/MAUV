@@ -1,8 +1,8 @@
 import { LayoutDashboard, Calendar, MessageCircle, Users, Send, Settings } from 'lucide-react@0.487.0';
 import { useState } from 'react';
-import { FloatingBackground } from './FloatingBackground';
-import { BottomNav } from './BottomNav';
-import { AmaraAvatar } from './AmaraAvatar';
+import { FloatingBackground } from '../shared/FloatingBackground';
+import { BottomNav } from '../shared/BottomNav';
+import { AmaraAvatar } from '../shared/AmaraAvatar';
 import amaraLogo from "figma:asset/amara-logo.png";
 
 interface AmaraAIChatProps {
