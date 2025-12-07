@@ -50,7 +50,7 @@ import { CongratulationsScreen } from './components/onboarding/CongratulationsSc
 import { CycleChangesScreen } from './components/onboarding/CycleChangesScreen';
 import { BirthControlScreen } from './components/onboarding/BirthControlScreen';
 import { TemperatureOvulationScreen } from './components/onboarding/TemperatureOvulationScreen';
-import { UnlockPremiumModal } from './components/onboarding/UnlockPremiumModal';
+import { UnlockPremiumModal } from './components/UnlockPremiumModal';
 import { NotificationPermissionScreen } from './components/onboarding/NotificationPermissionScreen';
 import { TermsAgreementScreen } from './components/onboarding/TermsAgreementScreen';
 import { IntroduceAmaraScreen } from './components/onboarding/IntroduceAmaraScreen';
