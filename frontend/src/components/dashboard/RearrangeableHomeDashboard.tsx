@@ -2,7 +2,7 @@ import { LogDefinition, DayLogs, LogEntry, NotificationSettings, CycleEvent } fr
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import image_4181731f1825e464f60d30194016a6b9994ed07a from 'figma:asset/4181731f1825e464f60d30194016a6b9994ed07a.png';
 import { toast } from 'sonner@2.0.3';
-import { AmaraNavButton } from './AmaraNavButton';
+import { AmaraNavButton } from '../shared/AmaraNavButton';
 
 interface HomeDashboardProps {
   onNavigate: (screen: 'calendar' | 'symptom-tracker' | 'insights' | 'settings' | 'amara-chat' | 'tribal-chat' | 'partner-link') => void;

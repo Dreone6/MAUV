@@ -8,9 +8,9 @@ import {
   TrendingUp, Moon, Zap, Settings, Bell
 } from 'lucide-react@0.487.0';
 import { useState, useEffect } from 'react';
-import { CyclePhaseRing } from './CyclePhaseRing';
-import { LogModal } from './LogModal';
-import { NotificationSettingsModal } from './NotificationSettingsModal';
+import { CyclePhaseRing } from '../calendar/CyclePhaseRing';
+import { LogModal } from '../tracking/LogModal';
+import { NotificationSettingsModal } from '../shared/NotificationSettingsModal';
 import { LogDefinition, DayLogs, LogEntry, NotificationSettings, CycleEvent } from '../types';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import amaraLogo from "figma:asset/amara-logo.png";
