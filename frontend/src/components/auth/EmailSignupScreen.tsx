@@ -40,15 +40,42 @@ interface EmailSignupScreenProps {
 }
 
 export function EmailSignupScreen({ onBack, onNext, onSignIn }: EmailSignupScreenProps) {
+  const { signUp } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSignup = () => {
-    if (email && password && agreedToTerms) {
-      alert('Account created successfully!');
+  const handleSignup = async () => {
+    if (!email || !password) {
+      setError('Please fill in all fields');
+      return;
+    }
+    
+    if (!agreedToTerms) {
+      setError('Please agree to Terms & Privacy Policy');
+      return;
+    }
+    
+    if (password.length < 8) {
+      setError('Password must be at least 8 characters');
+      return;
+    }
+    
+    try {
+      setLoading(true);
+      setError(null);
+      await signUp(email, password);
       onNext();
+    } catch (err: any) {
+      setError(err.message || 'Failed to create account');
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
     } else {
       alert('Please fill all fields and agree to the terms');
     }
