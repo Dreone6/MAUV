@@ -1,5 +1,6 @@
 import { ArrowLeft, Mail, Lock, Eye, EyeOff, Sparkles } from 'lucide-react@0.487.0';
 import { useState } from 'react';
+import { useAuth } from '../../hooks/useAuth';
 
 // Apple Logo SVG Component
 const AppleLogo = () => (
