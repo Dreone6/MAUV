@@ -49,7 +49,7 @@ async def create_checkout_session(request: Request):
             success_url=f"{os.getenv('FRONTEND_URL')}/payment-success?session_id={{CHECKOUT_SESSION_ID}}",
             cancel_url=f"{os.getenv('FRONTEND_URL')}/settings",
             subscription_data={
-                "trial_period_days": 7,
+                "trial_period_days": 14,
                 "metadata": {"supabase_user_id": user_id}
             },
             metadata={"supabase_user_id": user_id}
