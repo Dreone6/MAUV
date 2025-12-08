@@ -8,11 +8,27 @@ interface NameInputScreenProps {
 }
 
 export function NameInputScreen({ onBack, onNext }: NameInputScreenProps) {
-  const [name, setName] = useState('Samantha');
+  const { updateProfile } = useUser();
+  const [name, setName] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleNext = () => {
-    if (name.trim()) {
+  const handleNext = async () => {
+    if (!name.trim()) {
+      setError('Please enter your name');
+      return;
+    }
+    
+    try {
+      setLoading(true);
+      setError(null);
+      await updateProfile({ first_name: name.trim() });
       onNext(name);
+    } catch (err: any) {
+      setError(err.message || 'Failed to save name');
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
