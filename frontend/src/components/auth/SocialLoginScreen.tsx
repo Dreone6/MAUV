@@ -43,33 +43,74 @@ interface SocialLoginScreenProps {
 }
 
 export function SocialLoginScreen({ onBack, onNext }: SocialLoginScreenProps) {
-  const handleAppleLogin = () => {
-    alert('Continue with Apple');
-    onNext();
+  const { signInWithOAuth } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleAppleLogin = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      await signInWithOAuth('apple');
+      onNext();
+    } catch (err) {
+      setError('Failed to sign in with Apple');
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleGoogleLogin = () => {
-    alert('Continue with Google');
-    onNext();
+  const handleGoogleLogin = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      await signInWithOAuth('google');
+      onNext();
+    } catch (err) {
+      setError('Failed to sign in with Google');
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleFacebookLogin = () => {
-    alert('Continue with Facebook');
-    onNext();
+  const handleFacebookLogin = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      await signInWithOAuth('facebook');
+      onNext();
+    } catch (err) {
+      setError('Failed to sign in with Facebook');
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleXLogin = () => {
-    alert('Continue with X');
-    onNext();
+  const handleXLogin = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      await signInWithOAuth('twitter');
+      onNext();
+    } catch (err) {
+      setError('Failed to sign in with X');
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleEmailLogin = () => {
-    alert('Continue with Email');
+    // Navigate to email signup screen
     onNext();
   };
 
   const handleLogin = () => {
-    alert('Login to existing account');
+    // For existing users - could navigate to email sign in
+    alert('Login to existing account - Will navigate to sign in');
   };
 
   return (
