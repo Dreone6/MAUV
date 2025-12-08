@@ -219,10 +219,11 @@ export function BirthdayInputScreen({ onBack, onNext }: BirthdayInputScreenProps
         <div className="pb-8 mt-8">
           {/* Next Button */}
           <button
-            onClick={onNext}
-            className="w-full py-4 px-6 rounded-full bg-gradient-to-r from-pink-400 to-pink-500 text-white transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg"
+            onClick={handleNext}
+            disabled={loading}
+            className="w-full py-4 px-6 rounded-full bg-gradient-to-r from-pink-400 to-pink-500 text-white transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Continue
+            {loading ? 'Saving...' : 'Continue'}
           </button>
         </div>
       </div>
