@@ -1,7 +1,7 @@
 import { LayoutDashboard, Calendar, MessageCircle, Users, Settings, TrendingUp, X } from 'lucide-react@0.487.0';
 import { useState } from 'react';
-import { FloatingBackground } from './FloatingBackground';
-import { BottomNav } from './BottomNav';
+import { FloatingBackground } from '../shared/FloatingBackground';
+import { BottomNav } from '../shared/BottomNav';
 
 interface CalendarViewProps {
   onBack: () => void;
