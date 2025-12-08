@@ -1,5 +1,6 @@
 import { ArrowLeft } from 'lucide-react@0.487.0';
 import { useState, useRef, useEffect } from 'react';
+import { useUser } from '../../../hooks/useUser';
 
 interface BirthdayInputScreenProps {
   onBack: () => void;
