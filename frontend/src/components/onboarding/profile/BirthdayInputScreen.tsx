@@ -8,11 +8,33 @@ interface BirthdayInputScreenProps {
 }
 
 export function BirthdayInputScreen({ onBack, onNext }: BirthdayInputScreenProps) {
+  const { updateProfile } = useUser();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const currentYear = new Date().getFullYear();
   
   const [selectedMonth, setSelectedMonth] = useState('January');
   const [selectedDay, setSelectedDay] = useState(1);
   const [selectedYear, setSelectedYear] = useState(1990);
+
+  const handleNext = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      // Convert to YYYY-MM-DD format
+      const monthIndex = months.indexOf(selectedMonth) + 1;
+      const birthday = `${selectedYear}-${String(monthIndex).padStart(2, '0')}-${String(selectedDay).padStart(2, '0')}`;
+      
+      await updateProfile({ birthday });
+      onNext();
+    } catch (err: any) {
+      setError(err.message || 'Failed to save birthday');
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const months = [
     'January', 'February', 'March', 'April', 'May', 'June',
