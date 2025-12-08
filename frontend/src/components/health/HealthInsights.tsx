@@ -28,7 +28,7 @@ import {
 } from 'lucide-react@0.487.0';
 import { FloatingBackground } from '../shared/FloatingBackground';
 import { BottomNav } from '../shared/BottomNav';
-import { HistoricalLogs, CycleData } from '../types';
+import { HistoricalLogs, CycleData } from '../../types';
 import {
   predictNextPeriod,
   calculateCycleDay,
@@ -36,7 +36,7 @@ import {
   analyzeSymptomPatterns,
   getLoggingStreak,
   formatDate,
-} from '../utils/healthAnalytics';
+} from '../../utils/healthAnalytics';
 
 // CircularProgress Component
 interface CircularProgressProps {
