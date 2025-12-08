@@ -11,6 +11,7 @@ import uuid
 from datetime import datetime, timezone
 from routes.chat import router as chat_router
 from routes.export import router as export_router
+from routes.payments import router as payments_router
 
 
 ROOT_DIR = Path(__file__).parent
