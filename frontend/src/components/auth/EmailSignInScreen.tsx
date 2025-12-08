@@ -41,17 +41,30 @@ interface EmailSignInScreenProps {
 }
 
 export function EmailSignInScreen({ onBack, onNext, onSignUp, onForgotPassword }: EmailSignInScreenProps) {
+  const { signIn } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSignIn = () => {
-    if (email && password) {
-      alert('Sign in successful!');
+  const handleSignIn = async () => {
+    if (!email || !password) {
+      setError('Please fill in all fields');
+      return;
+    }
+    
+    try {
+      setLoading(true);
+      setError(null);
+      await signIn(email, password);
       onNext();
-    } else {
-      alert('Please fill all fields');
+    } catch (err: any) {
+      setError(err.message || 'Failed to sign in');
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
