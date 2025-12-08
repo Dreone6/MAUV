@@ -1,0 +1,12 @@
+{
+  "buildCommand": "cd frontend && yarn build",
+  "outputDirectory": "frontend/build",
+  "framework": "vite",
+  "installCommand": "cd frontend && yarn install",
+  "devCommand": "cd frontend && yarn dev",
+  "env": {
+    "VITE_SUPABASE_URL": "https://nomvbhqjisbmgsxwgaoa.supabase.co",
+    "VITE_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5vbXZiaHFqaXNibWdzeHdnYW9hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNTE1MjUsImV4cCI6MjA4MDcyNzUyNX0.1qVii2NPeHpYsy7abn5_gH54P1-yRvT4wBakm_OsJDA",
+    "VITE_STRIPE_PUBLISHABLE_KEY": "pk_live_51RWR5eHSDI56Von2VW5j59tqTCKYQ8lPoQKQ4qmCm9cGEulT9iN4LQmz7HIX0d6a65GkAc8fM6FC0U7taf1kkkT700X75rSSxq"
+  }
+}
