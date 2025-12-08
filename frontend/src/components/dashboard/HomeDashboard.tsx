@@ -12,7 +12,7 @@ import { CyclePhaseRing } from '../calendar/CyclePhaseRing';
 import { LogModal } from '../tracking/LogModal';
 import { NotificationSettingsModal } from '../shared/NotificationSettingsModal';
 import { LogDefinition, DayLogs, LogEntry, NotificationSettings, CycleEvent } from '../types';
-import { ImageWithFallback } from './figma/ImageWithFallback';
+import { ImageWithFallback } from '../figma/ImageWithFallback';
 import amaraLogo from "figma:asset/amara-logo.png";
 
 interface HomeDashboardProps {

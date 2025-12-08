@@ -1,5 +1,5 @@
 import { LogDefinition, DayLogs, LogEntry, NotificationSettings, CycleEvent } from '../types';
-import { ImageWithFallback } from './figma/ImageWithFallback';
+import { ImageWithFallback } from '../figma/ImageWithFallback';
 import image_4181731f1825e464f60d30194016a6b9994ed07a from 'figma:asset/4181731f1825e464f60d30194016a6b9994ed07a.png';
 import { toast } from 'sonner@2.0.3';
 import { AmaraNavButton } from '../shared/AmaraNavButton';
