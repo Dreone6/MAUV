@@ -158,9 +158,16 @@ export function SocialLoginScreen({ onBack, onNext }: SocialLoginScreenProps) {
 
         {/* Social Login Buttons */}
         <div className="space-y-4 mb-8">
+          {error && (
+            <div className="p-4 rounded-lg bg-red-500/20 border border-red-500/30 text-red-200 text-sm mb-4">
+              {error}
+            </div>
+          )}
+          
           <button
             onClick={handleAppleLogin}
-            className="w-full py-4 px-6 rounded-full bg-white text-gray-900 flex items-center justify-center gap-3 transition-all duration-300 hover:scale-105 active:scale-95"
+            disabled={loading}
+            className="w-full py-4 px-6 rounded-full bg-white text-gray-900 flex items-center justify-center gap-3 transition-all duration-300 hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <AppleLogo />
             <span>Continue with Apple</span>
