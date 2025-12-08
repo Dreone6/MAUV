@@ -3,6 +3,8 @@ import image_c9e241a3fa1cc3d3cb93a457985667ea8e43a8c8 from 'figma:asset/c9e241a3
 import image_1220b64962bcd5a1383832e53b5beb7c82ac51ef from 'figma:asset/1220b64962bcd5a1383832e53b5beb7c82ac51ef.png';
 import { ArrowLeft, Shield, Mail } from 'lucide-react@0.487.0';
 import mauvLogo from 'figma:asset/6ef1ddd1de4618a9d43c80d42ea305e9848fbf52.png';
+import { useAuth } from '../../hooks/useAuth';
+import { useState } from 'react';
 
 // Apple Logo SVG Component
 const AppleLogo = () => (
