@@ -8,30 +8,12 @@ interface LastPeriodStartScreenProps {
 }
 
 export function LastPeriodStartScreen({ onNext, onNotSure }: LastPeriodStartScreenProps) {
-  const { addPeriod } = usePeriods();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState(9);
   const [currentMonth] = useState('October 2024');
 
-  const handleNext = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      
-      // Create date from selected day (simplified for now - would need month/year too)
-      const today = new Date();
-      const startDate = new Date(today.getFullYear(), today.getMonth(), selectedDate);
-      const dateString = startDate.toISOString().split('T')[0];
-      
-      await addPeriod({ start_date: dateString });
-      onNext();
-    } catch (err: any) {
-      setError(err.message || 'Failed to save period data');
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
+  const handleNext = () => {
+    // Just navigate forward - data will be saved after authentication
+    onNext();
   };
 
   const daysOfWeek = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
