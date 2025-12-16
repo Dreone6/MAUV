@@ -8,28 +8,17 @@ interface NameInputScreenProps {
 }
 
 export function NameInputScreen({ onBack, onNext }: NameInputScreenProps) {
-  const { updateProfile } = useUser();
   const [name, setName] = useState('');
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleNext = async () => {
+  const handleNext = () => {
     if (!name.trim()) {
       setError('Please enter your name');
       return;
     }
     
-    try {
-      setLoading(true);
-      setError(null);
-      await updateProfile({ first_name: name.trim() });
-      onNext(name);
-    } catch (err: any) {
-      setError(err.message || 'Failed to save name');
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
+    // Just pass the name forward - will save to Supabase after auth is complete
+    onNext(name.trim());
   };
 
   const handleClear = () => {
