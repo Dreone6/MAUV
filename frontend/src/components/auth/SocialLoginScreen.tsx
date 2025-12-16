@@ -48,63 +48,31 @@ export function SocialLoginScreen({ onBack, onNext }: SocialLoginScreenProps) {
   const [error, setError] = useState<string | null>(null);
 
   const handleAppleLogin = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      await signInWithOAuth('apple');
-      onNext();
-    } catch (err) {
-      setError('Failed to sign in with Apple');
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
+    // Temporarily disabled until OAuth is configured in Supabase
+    alert('Social login coming soon! Please use email signup for now.');
+    return;
   };
 
   const handleGoogleLogin = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      await signInWithOAuth('google');
-      onNext();
-    } catch (err) {
-      setError('Failed to sign in with Google');
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
+    // Temporarily disabled until OAuth is configured in Supabase
+    alert('Social login coming soon! Please use email signup for now.');
+    return;
   };
 
   const handleFacebookLogin = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      await signInWithOAuth('facebook');
-      onNext();
-    } catch (err) {
-      setError('Failed to sign in with Facebook');
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
+    // Temporarily disabled until OAuth is configured in Supabase
+    alert('Social login coming soon! Please use email signup for now.');
+    return;
   };
 
   const handleXLogin = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      await signInWithOAuth('twitter');
-      onNext();
-    } catch (err) {
-      setError('Failed to sign in with X');
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
+    // Temporarily disabled until OAuth is configured in Supabase
+    alert('Social login coming soon! Please use email signup for now.');
+    return;
   };
 
   const handleEmailLogin = () => {
-    // Navigate to email signup screen
+    // Go to email signup - this works!
     onNext();
   };
 
