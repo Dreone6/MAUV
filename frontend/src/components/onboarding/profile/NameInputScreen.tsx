@@ -1,6 +1,5 @@
 import { ArrowLeft, X } from 'lucide-react@0.487.0';
 import { useState } from 'react';
-import { useUser } from '../../../hooks/useUser';
 
 interface NameInputScreenProps {
   onBack: () => void;
