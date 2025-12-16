@@ -1,6 +1,5 @@
 import { ChevronLeft, ChevronRight, Droplet } from 'lucide-react@0.487.0';
 import { useState } from 'react';
-import { usePeriods } from '../../../hooks/usePeriods';
 
 interface LastPeriodStartScreenProps {
   onNext: () => void;
