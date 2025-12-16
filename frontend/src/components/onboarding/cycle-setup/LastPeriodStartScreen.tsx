@@ -112,10 +112,9 @@ export function LastPeriodStartScreen({ onNext, onNotSure }: LastPeriodStartScre
           </button>
           <button
             onClick={handleNext}
-            disabled={loading}
-            className="flex-1 py-4 px-6 rounded-full bg-gradient-to-r from-purple-400 to-fuchsia-500 text-white transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 py-4 px-6 rounded-full bg-gradient-to-r from-purple-400 to-fuchsia-500 text-white transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg"
           >
-            {loading ? 'Saving...' : 'Next'}
+            Next
           </button>
         </div>
       </div>
